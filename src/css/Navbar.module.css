@@ -1,10 +1,12 @@
 .container {
   background-color: var(--bg-black);
   width: 100%;
-  padding: 30px 20px;
+  padding: 20px;
   color: var(--btn-text);
   font-size: 20px;
   font-weight: 500;
+  position: relative;
+  z-index: 100;
 }
 
 .navInner {
@@ -13,11 +15,32 @@
   justify-content: space-between;
 }
 
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Hamburger menu - hidden on large screens */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: var(--btn-text);
+  border-radius: 2px;
+}
+
 .btnContainer {
   display: flex;
   gap: 15px;
 }
 
+/* Buttons styling */
 .btn {
   padding: 8px;
   border-radius: 12px;
@@ -29,6 +52,8 @@
   outline: none;
   color: var(--btn-text);
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
 }
 
 .logoutBtn {
@@ -63,4 +88,58 @@
   outline: none;
   color: var(--btn-text);
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.active:hover {
+  background-color: var(--btn-primary-hover);
+}
+/* Responsive / Mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 32px;
+    background: none;
+    border: none;
+    color: var(--btn-text);
+    cursor: pointer;
+    display: none;
+  }
+  .btnContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--bg-black);
+    padding: 80px 20px 20px 20px; /* buttons start a little below top */
+    align-items: center;
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .btnContainer.activeMenu {
+    display: flex;
+  }
+
+  .btn,
+  .logoutBtn,
+  .active {
+    width: 80%; /* buttons wider on mobile */
+    font-size: 18px;
+    padding: 12px;
+  }
+}
+.closeBtn {
+  display: none;
 }

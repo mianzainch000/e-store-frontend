@@ -2,44 +2,58 @@
 import styles from "@/css/Navbar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
     const path = usePathname();
-    return (
-        <>
-            <div className={styles.container}>
-                <div className={styles.navInner}>
-                    <div>Logo</div>
-                    <div className={styles.btnContainer}>
-                        <Link href="/products">
-                            <button
-                                className={` ${path === "/products" ? styles.active : styles.btn}`}
-                            >
-                                Products
-                            </button>
-                        </Link>
-                        <Link href="/products">
-                            <button
-                                className={` ${path === "/addProduct" ? styles.active : styles.btn}`}
-                            >
-                                Add Product
-                            </button>
-                        </Link>
-                        <Link href="/products">
-                            <button
-                                className={` ${path === "/cart" ? styles.active : styles.btn}`}
-                            >
-                                Cart
-                            </button>
-                        </Link>
+    const [menuOpen, setMenuOpen] = useState(false);
 
-                        <button className={styles.btn}>Light Mode</button>
-                        <button className={styles.logoutBtn}>Logout</button>
-                    </div>
+    const toggleMenu = () => setMenuOpen(!menuOpen);
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.navInner}>
+                <div className={styles.logo}>Logo</div>
+
+                {/* Hamburger icon */}
+                <div className={styles.hamburger} onClick={toggleMenu}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+                {/* Fullscreen menu overlay */}
+                <div
+                    className={`${styles.btnContainer} ${menuOpen ? styles.activeMenu : ""}`}
+                >
+                    <button className={styles.closeBtn} onClick={toggleMenu}>
+                        &times;
+                    </button>
+
+                    <Link
+                        href="/products"
+                        className={path === "/products" ? styles.active : styles.btn}
+                    >
+                        Products
+                    </Link>
+
+                    <Link
+                        href="/products"
+                        className={path === "/addProduct" ? styles.active : styles.btn}
+                    >
+                        Add Product
+                    </Link>
+                    <Link
+                        href="/products"
+                        className={path === "/cart" ? styles.active : styles.btn}
+                    >
+                        Cart
+                    </Link>
+                    <button className={styles.btn}>Light Mode</button>
+                    <button className={styles.logoutBtn}>Logout</button>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
