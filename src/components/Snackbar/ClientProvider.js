@@ -1,6 +1,13 @@
 "use client";
-import { SnackbarProvider } from "@/components/Snackbar";
+import { useEffect, useState } from "react";
 
-export default function ClientProvider({ children }) {
-  return <SnackbarProvider>{children}</SnackbarProvider>;
-}
+const ClientOnlyWrapper = ({ children }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+  return children;
+};
+
+export default ClientOnlyWrapper;
