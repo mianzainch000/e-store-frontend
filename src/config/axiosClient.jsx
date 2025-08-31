@@ -15,7 +15,7 @@ axiosClient.interceptors.request.use((config) => {
   // Server-side
   try {
     token = cookies().get("sessionToken")?.value;
-  } catch (err) {}
+  } catch {}
 
   // Client-side
   if (!token && typeof window !== "undefined") {

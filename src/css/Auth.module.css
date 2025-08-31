@@ -1,10 +1,10 @@
 .container {
   display: flex;
+  padding: 20px;
   min-height: 100dvh;
   align-items: center;
   justify-content: center;
   background: var(--bg-gradient);
-  padding: 20px;
 }
 
 .card {
@@ -32,12 +32,12 @@
 
 .inputField {
   width: 100%;
+  outline: none;
+  font-size: 14px;
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid var(--input-border);
-  font-size: 14px;
-  outline: none;
   transition: all 0.3s ease;
+  border: 1px solid var(--input-border);
 }
 
 .inputField:focus {
@@ -47,30 +47,30 @@
 
 .passwordWrapper {
   display: flex;
-  align-items: center;
   position: relative;
+  align-items: center;
 }
 
 .toggleBtn {
-  position: absolute;
   right: 12px;
   border: none;
-  background: none;
   font-size: 16px;
   cursor: pointer;
+  background: none;
+  position: absolute;
 }
 
 .forgotWrapper {
   display: flex;
-  justify-content: flex-end;
   margin-top: -5px;
   margin-bottom: 10px;
+  justify-content: flex-end;
 }
 
 .forgotLink {
   font-size: 13px;
-  color: var(--text-link);
   text-decoration: none;
+  color: var(--text-link);
 }
 
 .forgotLink:hover {
@@ -78,15 +78,15 @@
 }
 
 .submitBtn {
-  background: var(--btn-primary);
-  color: var(--btn-text);
   border: none;
   padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
   font-size: 15px;
   cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
   transition: 0.3s ease;
+  color: var(--btn-text);
+  background: var(--btn-primary);
 }
 
 .submitBtn:hover {
@@ -94,20 +94,20 @@
 }
 
 .googleBtn {
-  display: flex;
   gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 12px;
+  width: 100%;
+  display: flex;
   padding: 12px;
-  border: 1px solid var(--btn-google-border);
-  border-radius: 8px;
-  background: var(--btn-google-bg);
   cursor: pointer;
   font-size: 14px;
+  margin-top: 12px;
   font-weight: 500;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
-  width: 100%;
+  background: var(--btn-google-bg);
+  border: 1px solid var(--btn-google-border);
 }
 
 .googleBtn:hover {
@@ -121,9 +121,9 @@
 }
 
 .loginText a {
-  color: var(--text-link);
   font-weight: bold;
   text-decoration: none;
+  color: var(--text-link);
 }
 
 .loginText a:hover {
