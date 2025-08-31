@@ -7,7 +7,7 @@
   font-weight: 500;
 }
 
-.w {
+.navInner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,4 +50,17 @@
 
 .logoutBtn:hover {
   background-color: var(--btn-red-hover);
+}
+
+.active {
+  background-color: green;
+  padding: 8px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 120px;
+  border: none;
+  outline: none;
+  color: var(--btn-text);
+  cursor: pointer;
 }
