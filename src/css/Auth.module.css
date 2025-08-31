@@ -1,0 +1,140 @@
+.container {
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 16px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+.form {
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.inputField:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 5px var(--input-focus-shadow);
+}
+
+.passwordWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.toggleBtn {
+  position: absolute;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.forgotWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.forgotLink {
+  font-size: 13px;
+  color: var(--text-link);
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.submitBtn {
+  background: var(--btn-primary);
+  color: var(--btn-text);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submitBtn:hover {
+  background: var(--btn-primary-hover);
+}
+
+.googleBtn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--btn-google-border);
+  border-radius: 8px;
+  background: var(--btn-google-bg);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.googleBtn:hover {
+  background: var(--btn-google-hover-bg);
+}
+
+.loginText {
+  font-size: 14px;
+  margin-top: 20px;
+  color: var(--text-secondary);
+}
+
+.loginText a {
+  color: var(--text-link);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.loginText a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px;
+  }
+  .title {
+    font-size: 20px;
+  }
+}
