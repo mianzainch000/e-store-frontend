@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
+import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import { apiConfig } from "@/config/apiConfig";
 
 const ForgotPassword = () => {
   // Hooks

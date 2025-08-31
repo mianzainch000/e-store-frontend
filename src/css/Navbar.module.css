@@ -1,12 +1,12 @@
 .container {
-  background-color: var(--bg-black);
   width: 100%;
+  z-index: 100;
   padding: 20px;
-  color: var(--btn-text);
   font-size: 20px;
   font-weight: 500;
   position: relative;
-  z-index: 100;
+  color: var(--btn-text);
+  background-color: var(--bg-black);
 }
 
 .navInner {
@@ -22,51 +22,51 @@
 
 /* Hamburger menu - hidden on large screens */
 .hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
   gap: 5px;
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
 }
 
 .hamburger div {
   width: 25px;
   height: 3px;
-  background-color: var(--btn-text);
   border-radius: 2px;
+  background-color: var(--btn-text);
 }
 
 .btnContainer {
-  display: flex;
   gap: 15px;
+  display: flex;
 }
 
 /* Buttons styling */
 .btn {
   padding: 8px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
   width: 120px;
-  background-color: var(--btn-primary);
   border: none;
   outline: none;
-  color: var(--btn-text);
+  font-size: 16px;
   cursor: pointer;
+  font-weight: 400;
   text-align: center;
+  border-radius: 12px;
   text-decoration: none;
+  color: var(--btn-text);
+  background-color: var(--btn-primary);
 }
 
 .logoutBtn {
   padding: 8px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
   width: 120px;
-  background-color: var(--btn-red);
   border: none;
   outline: none;
-  color: var(--btn-text);
+  font-size: 16px;
   cursor: pointer;
+  font-weight: 400;
+  border-radius: 12px;
+  color: var(--btn-text);
+  background-color: var(--btn-red);
 }
 
 .btn:hover {
@@ -78,18 +78,18 @@
 }
 
 .active {
-  background-color: green;
   padding: 8px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
   width: 120px;
   border: none;
   outline: none;
-  color: var(--btn-text);
+  font-size: 16px;
   cursor: pointer;
+  font-weight: 400;
   text-align: center;
+  border-radius: 12px;
   text-decoration: none;
+  color: var(--btn-text);
+  background-color: green;
 }
 
 .active:hover {
@@ -102,30 +102,30 @@
   }
 
   .closeBtn {
-    position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 32px;
-    background: none;
     border: none;
-    color: var(--btn-text);
-    cursor: pointer;
     display: none;
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    position: absolute;
+    color: var(--btn-text);
   }
   .btnContainer {
-    display: none;
-    position: fixed;
+    padding: 80px 20px 20px 20px; /* buttons start a little below top */
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 100%;
-    flex-direction: column;
     gap: 20px;
-    background-color: var(--bg-black);
-    padding: 80px 20px 20px 20px; /* buttons start a little below top */
-    align-items: center;
+    width: 100%;
     z-index: 999;
+    display: none;
+    height: 100vh;
+    position: fixed;
     overflow-y: auto;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-black);
   }
 
   .btnContainer.activeMenu {
@@ -136,8 +136,8 @@
   .logoutBtn,
   .active {
     width: 80%; /* buttons wider on mobile */
-    font-size: 18px;
     padding: 12px;
+    font-size: 18px;
   }
 }
 .closeBtn {
