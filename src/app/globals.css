@@ -31,6 +31,39 @@
   --shadow-card: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-card: #1e1e1e;
+  --black: #000000;
+  --white: #1e1e1e;
+  --bg-gradient: linear-gradient(135deg, #1c1c1c, #2a2a2a);
+
+  /* Text */
+  --text-primary: #f1f1f1;
+  --text-secondary: #bbb;
+  --text-link: #4ea1ff;
+
+  /* Input */
+  --input-border: #444;
+  --input-focus-border: #4ea1ff;
+  --input-focus-shadow: rgba(78, 161, 255, 0.3);
+
+  /* Buttons */
+  --btn-primary: #4ea1ff;
+  --btn-primary-hover: #1e75d8;
+  --btn-text: #ffffff;
+  --btn-red: #ff4d4d;
+  --btn-red-hover: #cc0000;
+
+  /* Google Button */
+  --btn-google-border: #555;
+  --btn-google-bg: #2a2a2a;
+  --btn-google-hover-bg: #333;
+
+  /* Shadows */
+  --shadow-card: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +72,7 @@
 }
 
 body {
-  background: var(--bg-color);
-  color: var(--text-color);
+  background: var(--bg-gradient);
+  color: var(--text-primary);
   transition: all 0.3s ease;
 }
