@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
-import ClientProvider from "@/components/Snackbar/ClientProvider";
+import { SnackbarProvider } from "@/components/Snackbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <ClientProvider>{children}</ClientProvider>
+        <SnackbarProvider>{children}</SnackbarProvider>
       </body>
     </html>
   );
