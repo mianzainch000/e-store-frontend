@@ -1,6 +1,7 @@
 :root {
   /* Backgrounds */
   --bg-card: #ffffff;
+  --bg-black: #000000;
   --bg-gradient: linear-gradient(135deg, #f6f9fc, #eef2f7);
 
   /* Text */
@@ -15,8 +16,10 @@
 
   /* Buttons */
   --btn-primary: #0070f3;
-  --btn-primary-hover: #005bb5;
+  --btn-primary-hover: #0056c1;
   --btn-text: #ffffff;
+  --btn-red: #ff0000;
+  --btn-red-hover: #cc0000;
 
   /* Google Button */
   --btn-google-border: #ddd;

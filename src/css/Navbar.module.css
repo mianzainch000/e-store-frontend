@@ -1,0 +1,53 @@
+.container {
+  background-color: var(--bg-black);
+  width: 100%;
+  padding: 30px 20px;
+  color: var(--btn-text);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.w {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  padding: 8px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 120px;
+  background-color: var(--btn-primary);
+  border: none;
+  outline: none;
+  color: var(--btn-text);
+  cursor: pointer;
+}
+
+.logoutBtn {
+  padding: 8px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 120px;
+  background-color: var(--btn-red);
+  border: none;
+  outline: none;
+  color: var(--btn-text);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+.logoutBtn:hover {
+  background-color: var(--btn-red-hover);
+}
