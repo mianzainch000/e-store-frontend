@@ -5,16 +5,12 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const SnackbarContext = createContext();
 
 export const SnackbarProvider = ({ children }) => {
-  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("error");
   const [duration, setDuration] = useState(4000);
   const [position, setPosition] = useState("top-right");
   const [animation, setAnimation] = useState("slide-left");
-
-  // only render snackbar on client
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (open) {
@@ -41,8 +37,6 @@ export const SnackbarProvider = ({ children }) => {
   const getClasses = () => {
     return `${styles.snackbar} ${styles[type]} ${styles[position]} ${styles[animation]}`;
   };
-
-  if (!mounted) return children;
 
   return (
     <SnackbarContext.Provider value={showAlertMessage}>

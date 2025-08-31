@@ -26,31 +26,35 @@ const Navbar = () => {
         <div
           className={`${styles.btnContainer} ${menuOpen ? styles.activeMenu : ""}`}
         >
+          {/* Cross icon */}
+
           <button className={styles.closeBtn} onClick={toggleMenu}>
             &times;
           </button>
 
           <Link
             href="/products"
-            className={path === "/products" ? styles.active : styles.btn}
+            className={`${styles.btn} ${path === "/products" ? styles.activeSuccess : styles.btnPrimary}`}
           >
             Products
           </Link>
 
           <Link
-            href="/products"
-            className={path === "/addProduct" ? styles.active : styles.btn}
+            href="/addProduct"
+            className={`${styles.btn} ${path === "/addProduct" ? styles.activeSuccess : styles.btnPrimary}`}
           >
             Add Product
           </Link>
           <Link
-            href="/products"
-            className={path === "/cart" ? styles.active : styles.btn}
+            href="/cart"
+            className={`${styles.btn} ${path === "/cart" ? styles.activeSuccess : styles.btnPrimary}`}
           >
             Cart
           </Link>
-          <button className={styles.btn}>Light Mode</button>
-          <button className={styles.logoutBtn}>Logout</button>
+          <button className={`${styles.btn} ${styles.btnPrimary}`}>
+            Light Mode
+          </button>
+          <button className={`${styles.btn} ${styles.btnRed}`}>Logout</button>
         </div>
       </div>
     </div>

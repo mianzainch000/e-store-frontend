@@ -21,6 +21,7 @@
 }
 
 /* Hamburger menu - hidden on large screens */
+
 .hamburger {
   gap: 5px;
   display: none;
@@ -35,12 +36,19 @@
   background-color: var(--btn-text);
 }
 
+/* cross icon */
+
+.closeBtn {
+  display: none;
+}
+
+/* Buttons styling */
+
 .btnContainer {
   gap: 15px;
   display: flex;
 }
 
-/* Buttons styling */
 .btn {
   padding: 8px;
   width: 120px;
@@ -53,49 +61,34 @@
   border-radius: 12px;
   text-decoration: none;
   color: var(--btn-text);
+}
+
+.btnPrimary {
   background-color: var(--btn-primary);
 }
 
-.logoutBtn {
-  padding: 8px;
-  width: 120px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: 400;
-  border-radius: 12px;
-  color: var(--btn-text);
+.btnRed {
   background-color: var(--btn-red);
 }
 
-.btn:hover {
+.btnPrimary:hover {
   background-color: var(--btn-primary-hover);
 }
 
-.logoutBtn:hover {
+.btnRed:hover {
   background-color: var(--btn-red-hover);
 }
 
-.active {
-  padding: 8px;
-  width: 120px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: 400;
-  text-align: center;
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--btn-text);
+.activeSuccess {
   background-color: green;
 }
 
-.active:hover {
+.activeSuccess:hover {
   background-color: var(--btn-primary-hover);
 }
+
 /* Responsive / Mobile */
+
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
@@ -105,15 +98,16 @@
     top: 20px;
     right: 20px;
     border: none;
-    display: none;
+    z-index: 1000;
     font-size: 32px;
     cursor: pointer;
     background: none;
     position: absolute;
     color: var(--btn-text);
+    display: block !important;
   }
+
   .btnContainer {
-    padding: 80px 20px 20px 20px; /* buttons start a little below top */
     top: 0;
     left: 0;
     gap: 20px;
@@ -125,6 +119,7 @@
     overflow-y: auto;
     align-items: center;
     flex-direction: column;
+    padding: 80px 20px 20px 20px;
     background-color: var(--bg-black);
   }
 
@@ -132,14 +127,9 @@
     display: flex;
   }
 
-  .btn,
-  .logoutBtn,
-  .active {
-    width: 80%; /* buttons wider on mobile */
+  .btn {
+    width: 80%;
     padding: 12px;
     font-size: 18px;
   }
-}
-.closeBtn {
-  display: none;
 }
