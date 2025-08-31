@@ -1,7 +1,7 @@
 import ForgotPassword from "./template";
 
 const ForgotPasswordForm = () => {
-    return <ForgotPassword />;
+  return <ForgotPassword />;
 };
 
 export default ForgotPasswordForm;

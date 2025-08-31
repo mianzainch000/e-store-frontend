@@ -1,10 +1,7 @@
-
-import Signup from './template'
+import Signup from "./template";
 
 const RegistrationForm = () => {
-    return (
-        <Signup />
-    )
-}
+  return <Signup />;
+};
 
-export default RegistrationForm
+export default RegistrationForm;
