@@ -87,6 +87,12 @@
   background-color: var(--btn-primary-hover);
 }
 
+.welcomeText {
+  padding-top: 20px;
+  text-align: center;
+  color: var(--black);
+}
+
 /* Responsive / Mobile */
 
 @media (max-width: 768px) {

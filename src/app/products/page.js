@@ -11,53 +11,56 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.navInner}>
-        <div className={styles.logo}>Logo</div>
+    <>
+      <div className={styles.container}>
+        <div className={styles.navInner}>
+          <div className={styles.logo}>Logo</div>
 
-        {/* Hamburger icon */}
-        <div className={styles.hamburger} onClick={toggleMenu}>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+          {/* Hamburger icon */}
+          <div className={styles.hamburger} onClick={toggleMenu}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
-        {/* Fullscreen menu overlay */}
-        <div
-          className={`${styles.btnContainer} ${menuOpen ? styles.activeMenu : ""}`}
-        >
-          {/* Cross icon */}
-
-          <button className={styles.closeBtn} onClick={toggleMenu}>
-            &times;
-          </button>
-
-          <Link
-            href="/products"
-            className={`${styles.btn} ${path === "/products" ? styles.activeSuccess : styles.btnPrimary}`}
+          {/* Fullscreen menu overlay */}
+          <div
+            className={`${styles.btnContainer} ${menuOpen ? styles.activeMenu : ""}`}
           >
-            Products
-          </Link>
+            {/* Cross icon */}
 
-          <Link
-            href="/addProduct"
-            className={`${styles.btn} ${path === "/addProduct" ? styles.activeSuccess : styles.btnPrimary}`}
-          >
-            Add Product
-          </Link>
-          <Link
-            href="/cart"
-            className={`${styles.btn} ${path === "/cart" ? styles.activeSuccess : styles.btnPrimary}`}
-          >
-            Cart
-          </Link>
-          <button className={`${styles.btn} ${styles.btnPrimary}`}>
-            Light Mode
-          </button>
-          <button className={`${styles.btn} ${styles.btnRed}`}>Logout</button>
+            <button className={styles.closeBtn} onClick={toggleMenu}>
+              &times;
+            </button>
+
+            <Link
+              href="/products"
+              className={`${styles.btn} ${path === "/products" ? styles.activeSuccess : styles.btnPrimary}`}
+            >
+              Products
+            </Link>
+
+            <Link
+              href="/addProduct"
+              className={`${styles.btn} ${path === "/addProduct" ? styles.activeSuccess : styles.btnPrimary}`}
+            >
+              Add Product
+            </Link>
+            <Link
+              href="/cart"
+              className={`${styles.btn} ${path === "/cart" ? styles.activeSuccess : styles.btnPrimary}`}
+            >
+              Cart
+            </Link>
+            <button className={`${styles.btn} ${styles.btnPrimary}`}>
+              Light Mode
+            </button>
+            <button className={`${styles.btn} ${styles.btnRed}`}>Logout</button>
+          </div>
         </div>
       </div>
-    </div>
+      <h2 className={styles.welcomeText}>Welcome Zain Ishfaq</h2>
+    </>
   );
 };
 
