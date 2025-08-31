@@ -6,7 +6,7 @@
   font-weight: 500;
   position: relative;
   color: var(--btn-text);
-  background-color: var(--bg-black);
+  background-color: var(--black);
 }
 
 .navInner {
@@ -103,7 +103,7 @@
     cursor: pointer;
     background: none;
     position: absolute;
-    color: var(--btn-text);
+    color: var(--black);
     display: block !important;
   }
 
@@ -120,7 +120,7 @@
     align-items: center;
     flex-direction: column;
     padding: 80px 20px 20px 20px;
-    background-color: var(--bg-black);
+    background-color: var(--white);
   }
 
   .btnContainer.activeMenu {
