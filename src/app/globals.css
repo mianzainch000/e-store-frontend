@@ -34,8 +34,8 @@
 [data-theme="dark"] {
   /* Backgrounds */
   --bg-card: #1e1e1e;
-  --black: #000000;
-  --white: #1e1e1e;
+  --white: #000000;
+  --black: #ffffff;
   --bg-gradient: linear-gradient(135deg, #1c1c1c, #2a2a2a);
 
   /* Text */
