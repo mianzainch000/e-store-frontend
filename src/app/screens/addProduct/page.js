@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import styles from "@/css/AddProduct.module.css";
-import UploadImageSection from "@/components/UploadImageSection";
-import { useSnackbar } from "@/components/Snackbar";
-import Loader from "@/components/Loader";
-import handleAxiosError from "@/components/HandleAxiosError";
 import axios from "axios";
+import React, { useState } from "react";
+import Loader from "@/components/Loader";
+import styles from "@/css/AddProduct.module.css";
+import { useSnackbar } from "@/components/Snackbar";
+import handleAxiosError from "@/components/HandleAxiosError";
+import UploadImageSection from "@/components/UploadImageSection";
 
 const page = () => {
   //Hooks
@@ -193,7 +193,6 @@ const page = () => {
             rows={4}
             spellCheck={false} // ✅ prevent browser injection mismatch
           />
-
 
           <input
             type="text"

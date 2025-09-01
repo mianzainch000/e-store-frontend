@@ -34,22 +34,25 @@ export async function POST(req) {
     console.error("Error in POST handler:", error);
 
     return new Response(
-      JSON.stringify({ message: "Error occurred while processing the request" }),
-      { status: 500 }
+      JSON.stringify({
+        message: "Error occurred while processing the request",
+      }),
+      { status: 500 },
     );
   }
 }
-
 
 // Function to forward complex data to external API
 export const postData = async (params) => {
   try {
     // Default headers (assuming no file upload)
-    let headers = { 'Content-Type': 'application/json' };
+    let headers = { "Content-Type": "application/json" };
     let requestData = params;
 
     // Check if files are present in the params
-    const isFilePresent = Object.values(params).some(value => value instanceof File || value instanceof Blob);
+    const isFilePresent = Object.values(params).some(
+      (value) => value instanceof File || value instanceof Blob,
+    );
 
     // If files are present, use FormData
     if (isFilePresent) {
@@ -67,11 +70,13 @@ export const postData = async (params) => {
         }
       }
       requestData = formData;
-      headers = {};  // Set header for FormData
+      headers = {}; // Set header for FormData
     }
 
     // Send the data using axiosClient
-    const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
+    const response = await axiosClient.post(apiConfig.addProduct, requestData, {
+      headers,
+    });
 
     return response; // Return the response from external API
   } catch (error) {
