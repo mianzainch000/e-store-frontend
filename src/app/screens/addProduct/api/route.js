@@ -1,86 +1,87 @@
 import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
+import { NextResponse } from "next/server";
 
-// POST request handler for Next.js API route
+export const config = { api: { bodyParser: false } };
+
 export async function POST(req) {
   try {
-    let body = {};
-
     const contentType = req.headers.get("content-type") || "";
+    let body = {};
 
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
+      let files = [];
 
       for (const [key, value] of formData.entries()) {
-        try {
-          // If the value is JSON (like your sizes or imageOrder), parse it
-          body[key] = JSON.parse(value);
-        } catch {
-          body[key] = value;
+        if (key === "images") {
+          files.push(value); // collect files
+        } else {
+          try { body[key] = JSON.parse(value); }
+          catch { body[key] = value; }
         }
       }
+
+      if (files.length) body.images = files;
+
     } else if (contentType.includes("application/json")) {
       body = await req.json();
     } else {
       throw new Error("Unsupported content type: " + contentType);
     }
 
-    const data = await postData(body);
+    const response = await postData(body);
+    return NextResponse.json(response.data, { status: response.status });
 
-    return new Response(JSON.stringify(data?.data), {
-      status: data?.status || 200,
-    });
   } catch (error) {
-    console.error("Error in POST handler:", error);
-
-    return new Response(
-      JSON.stringify({
-        message: "Error occurred while processing the request",
-      }),
-      { status: 500 },
+    console.error("API Error:", error);
+    return NextResponse.json(
+      { message: error?.response?.data?.message || "Server Error" },
+      { status: error?.response?.status || 500 }
     );
   }
 }
 
-// Function to forward complex data to external API
+// Generic function to forward data to external API
 export const postData = async (params) => {
   try {
-    // Default headers (assuming no file upload)
     let headers = { "Content-Type": "application/json" };
     let requestData = params;
 
-    // Check if files are present in the params
-    const isFilePresent = Object.values(params).some(
-      (value) => value instanceof File || value instanceof Blob,
+    // Detect if there are any files or image arrays
+    const hasFilesOrImages = Object.values(params).some(
+      v => v instanceof File || v instanceof Blob || (Array.isArray(v) && v.every(i => i instanceof File || i instanceof Blob))
     );
 
-    // If files are present, use FormData
-    if (isFilePresent) {
+    if (hasFilesOrImages) {
       const formData = new FormData();
+
       for (const key in params) {
-        if (params[key] instanceof Array || params[key] instanceof Object) {
-          // If data is an array or object, stringify it before appending
-          formData.append(key, JSON.stringify(params[key]));
-        } else if (params[key] instanceof File || params[key] instanceof Blob) {
-          // If data is a file or blob, append as is
-          formData.append(key, params[key]);
+        const value = params[key];
+
+        if (value instanceof File || value instanceof Blob) {
+          formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          value.forEach(item => {
+            if (item instanceof File || item instanceof Blob) formData.append(key, item);
+            else formData.append(key, item); // append string URLs or other primitives
+          });
+        } else if (typeof value === "object") {
+          formData.append(key, JSON.stringify(value));
         } else {
-          // Otherwise, append the data as it is
-          formData.append(key, params[key]);
+          formData.append(key, value);
         }
       }
+
       requestData = formData;
-      headers = {}; // Set header for FormData
+      headers = {}; // browser will set multipart boundary
     }
 
-    // Send the data using axiosClient
-    const response = await axiosClient.post(apiConfig.addProduct, requestData, {
-      headers,
-    });
+    const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
+    return response;
 
-    return response; // Return the response from external API
   } catch (error) {
     console.error("Error in postData:", error);
-    throw error; // Propagate error
+    throw error;
   }
 };
