@@ -67,7 +67,7 @@ export const postData = async (params) => {
         }
       }
       requestData = formData;
-      headers = { 'Content-Type': 'multipart/form-data' };  // Set header for FormData
+      headers = {};  // Set header for FormData
     }
 
     // Send the data using axiosClient
