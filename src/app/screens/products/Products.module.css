@@ -1,0 +1,37 @@
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 34px;
+  padding: 20px;
+}
+
+/* NEW: Category Button Filter */
+.categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.categoryItem {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.categoryItem:hover {
+  background-color: #f0f0f0;
+}
+
+.activeCategory {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
