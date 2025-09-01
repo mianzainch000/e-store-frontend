@@ -6,7 +6,7 @@ const axiosClient = axios.create({
   baseURL: apiConfig.baseUrl,
   responseType: "json",
   validateStatus: () => true,
-  headers: { "Content-Type": "application/json" }, // default JSON ke liye
+  headers: { "Content-Type": "application/json" },
 });
 
 // Interceptor for token + FormData handling
@@ -26,11 +26,6 @@ axiosClient.interceptors.request.use((config) => {
 
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  // 🚨 Agar data FormData hai to JSON header hata do
-  if (config.data instanceof FormData) {
-    delete config.headers["Content-Type"];
   }
 
   return config;
