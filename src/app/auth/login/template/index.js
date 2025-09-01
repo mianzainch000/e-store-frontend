@@ -57,7 +57,7 @@ const Login = () => {
       if (res?.ok) {
         showAlertMessage({ message: "✅ Login successful", type: "success" });
         resetForm();
-        window.location.href = "/home";
+        window.location.href = "/screens/products";
       } else {
         showAlertMessage({
           message: `❌ ${res?.error}`,
