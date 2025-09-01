@@ -4,25 +4,27 @@ import { apiConfig } from "@/config/apiConfig";
 
 export const config = { api: { bodyParser: false } };
 
-// 🔹 POST handler
 export async function POST(req) {
   try {
     const contentType = req.headers.get("content-type") || "";
 
-    // 🔹 Read raw data
-    let rawData;
+    let requestData;
+    let headers = {};
+
     if (contentType.includes("multipart/form-data")) {
-      rawData = Buffer.from(await req.arrayBuffer());
+      // Forward raw buffer for multipart/form-data
+      requestData = Buffer.from(await req.arrayBuffer());
+      headers["Content-Type"] = contentType; // boundary included by browser
     } else if (contentType.includes("application/json")) {
-      rawData = await req.json();
+      requestData = await parseJSON(req);
+      headers["Content-Type"] = "application/json";
     } else {
-      rawData = Buffer.from(await req.arrayBuffer());
+      // Fallback: raw buffer for unknown content-types
+      requestData = Buffer.from(await req.arrayBuffer());
+      headers["Content-Type"] = contentType || "application/octet-stream";
     }
 
-    // 🔹 Convert to Axios-ready data (FormData / JSON)
-    const { data: requestData, headers } = prepareRequestData(rawData, contentType);
-
-    // 🔹 Send request to external API
+    // Send request to external API
     const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
 
     return NextResponse.json(response.data, { status: response.status });
@@ -35,32 +37,13 @@ export async function POST(req) {
   }
 }
 
-/**
- * Prepares request data for Axios
- * - If multipart/form-data: send raw buffer (browser sets boundary)
- * - If JSON: parse if stringified, leave object untouched
- * - Otherwise: send as raw buffer
- */
-function prepareRequestData(rawData, contentType) {
-  let requestData = rawData;
-  let headers = {};
-
-  if (contentType.includes("multipart/form-data")) {
-    // Buffer already from client, send directly
-    headers["Content-Type"] = contentType;
-  } else if (contentType.includes("application/json")) {
-    // Check if rawData is stringified JSON
-    if (typeof rawData === "string") {
-      try {
-        requestData = JSON.parse(rawData);
-      } catch {
-        requestData = rawData; // Not JSON, leave as-is
-      }
-    }
-    headers["Content-Type"] = "application/json";
-  } else {
-    headers["Content-Type"] = contentType || "application/octet-stream";
+// Safely parse JSON if necessary
+async function parseJSON(req) {
+  try {
+    // Already parsed JSON will be returned as-is
+    return await req.json();
+  } catch {
+    // Fallback: return raw text or primitive
+    return await req.text();
   }
-
-  return { data: requestData, headers };
 }
