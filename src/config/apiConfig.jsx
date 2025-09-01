@@ -5,4 +5,9 @@ export const apiConfig = {
   forgotPassword: "forgotPassword",
   resetPassword: "resetPassword",
   googleLogin: "googleLogin",
+  addProduct: "createProduct",
+  products: {
+    get: "getProducts",
+    delete: "deleteProduct",
+  },
 };

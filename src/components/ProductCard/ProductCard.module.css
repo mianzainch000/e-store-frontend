@@ -1,0 +1,80 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: var(--text-light, #fff);
+  border: 1px solid white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+
+.content {
+  padding: 16px;
+  text-align: center;
+}
+
+.price {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-dark, #333);
+  margin: 8px 0 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.viewButton,
+.deleteButton {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: none;
+  border: none;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.viewButton {
+  background-color: #1976d2;
+  color: white;
+}
+
+.viewButton:hover {
+  background-color: #125ea9;
+}
+
+.deleteButton {
+  background-color: transparent;
+  color: #d32f2f;
+  border: 2px solid #d32f2f;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .card {
+    width: 90%;
+    margin: 0 auto;
+  }
+}

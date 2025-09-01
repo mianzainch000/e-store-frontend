@@ -1,6 +1,6 @@
 "use client";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import styles from "@/css/Snackbar.module.css";
-import React, { createContext, useContext, useEffect, useState } from "react";
 
 const SnackbarContext = createContext();
 
@@ -8,7 +8,7 @@ export const SnackbarProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("error");
-  const [duration, setDuration] = useState(4000);
+  const [duration, setDuration] = useState(3000);
   const [position, setPosition] = useState("top-right");
   const [animation, setAnimation] = useState("slide-left");
 
@@ -22,7 +22,7 @@ export const SnackbarProvider = ({ children }) => {
   const showAlertMessage = ({
     message,
     type = "error",
-    duration = 4000,
+    duration = 3000,
     position = "top-right",
     animation = "slide-right",
   }) => {

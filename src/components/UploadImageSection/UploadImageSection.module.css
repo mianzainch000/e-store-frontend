@@ -1,0 +1,111 @@
+.imageSection {
+  margin-top: 20px;
+}
+
+.addImageBtn {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: var(--black);
+  margin-bottom: 15px;
+  background: transparent;
+  border: 1px dashed var(--black);
+}
+
+.imageCard {
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.imageLabel {
+  display: block;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.imagePreview {
+  width: 160px;
+  margin: auto;
+  height: 160px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border: 2px dashed var(--black);
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.icon {
+  font-size: 36px;
+  color: var(--black);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.removeBtn {
+  border: none;
+  display: block;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-left: auto;
+  text-align: center;
+  margin-right: auto;
+  background: transparent;
+  color: var(--btn-red-hover);
+}
+
+/* Size Fields */
+.sizeGrid {
+  margin-top: 12px;
+}
+
+.sizeTitle {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--black);
+}
+
+.sizeRow {
+  gap: 10px;
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.sizeInput {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--black);
+}
+
+.addSizeBtn {
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: var(--white);
+  background: var(--black);
+}
+
+.removeSizeBtn {
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--btn-red-hover);
+}

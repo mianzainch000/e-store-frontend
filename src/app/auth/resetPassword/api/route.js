@@ -4,19 +4,35 @@ import axiosClient from "@/config/axiosClient";
 // POST request handler for Next.js API route
 export async function POST(req) {
   try {
-    const body = await req.json(); // Get JSON body from the incoming request
+    let body = {};
 
-    // Call the generic function to handle complex data
+    const contentType = req.headers.get("content-type") || "";
+
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+
+      for (const [key, value] of formData.entries()) {
+        try {
+          // If the value is JSON (like your sizes or imageOrder), parse it
+          body[key] = JSON.parse(value);
+        } catch {
+          body[key] = value;
+        }
+      }
+    } else if (contentType.includes("application/json")) {
+      body = await req.json();
+    } else {
+      throw new Error("Unsupported content type: " + contentType);
+    }
+
     const data = await postData(body);
 
-    // Return response with the status code and data from the API call
     return new Response(JSON.stringify(data?.data), {
-      status: data?.status,
+      status: data?.status || 200,
     });
   } catch (error) {
     console.error("Error in POST handler:", error);
 
-    // Handle any errors and return a response
     return new Response(
       JSON.stringify({
         message: "Error occurred while processing the request",
@@ -54,16 +70,14 @@ export const postData = async (params) => {
         }
       }
       requestData = formData;
-      headers = { "Content-Type": "multipart/form-data" }; // Set header for FormData
+      headers = {}; // Set header for FormData
     }
 
     // Send the data using axiosClient
     const response = await axiosClient.post(
       apiConfig.resetPassword,
       requestData,
-      {
-        headers,
-      },
+      { headers },
     );
 
     return response; // Return the response from external API
