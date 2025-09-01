@@ -1,87 +1,66 @@
-import { apiConfig } from "@/config/apiConfig";
-import axiosClient from "@/config/axiosClient";
 import { NextResponse } from "next/server";
+import axiosClient from "@/config/axiosClient";
+import { apiConfig } from "@/config/apiConfig";
 
 export const config = { api: { bodyParser: false } };
 
+// 🔹 POST handler
 export async function POST(req) {
   try {
     const contentType = req.headers.get("content-type") || "";
-    let body = {};
 
+    // 🔹 Read raw data
+    let rawData;
     if (contentType.includes("multipart/form-data")) {
-      const formData = await req.formData();
-      let files = [];
-
-      for (const [key, value] of formData.entries()) {
-        if (key === "images") {
-          files.push(value); // collect files
-        } else {
-          try { body[key] = JSON.parse(value); }
-          catch { body[key] = value; }
-        }
-      }
-
-      if (files.length) body.images = files;
-
+      rawData = Buffer.from(await req.arrayBuffer());
     } else if (contentType.includes("application/json")) {
-      body = await req.json();
+      rawData = await req.json();
     } else {
-      throw new Error("Unsupported content type: " + contentType);
+      rawData = Buffer.from(await req.arrayBuffer());
     }
 
-    const response = await postData(body);
-    return NextResponse.json(response.data, { status: response.status });
+    // 🔹 Convert to Axios-ready data (FormData / JSON)
+    const { data: requestData, headers } = prepareRequestData(rawData, contentType);
 
-  } catch (error) {
-    console.error("API Error:", error);
+    // 🔹 Send request to external API
+    const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
+
+    return NextResponse.json(response.data, { status: response.status });
+  } catch (err) {
+    console.error("Route API Error:", err);
     return NextResponse.json(
-      { message: error?.response?.data?.message || "Server Error" },
-      { status: error?.response?.status || 500 }
+      { message: err?.response?.data?.message || "Server Error" },
+      { status: err?.response?.status || 500 }
     );
   }
 }
 
-// Generic function to forward data to external API
-export const postData = async (params) => {
-  try {
-    let headers = { "Content-Type": "application/json" };
-    let requestData = params;
+/**
+ * Prepares request data for Axios
+ * - If multipart/form-data: send raw buffer (browser sets boundary)
+ * - If JSON: parse if stringified, leave object untouched
+ * - Otherwise: send as raw buffer
+ */
+function prepareRequestData(rawData, contentType) {
+  let requestData = rawData;
+  let headers = {};
 
-    // Detect if there are any files or image arrays
-    const hasFilesOrImages = Object.values(params).some(
-      v => v instanceof File || v instanceof Blob || (Array.isArray(v) && v.every(i => i instanceof File || i instanceof Blob))
-    );
-
-    if (hasFilesOrImages) {
-      const formData = new FormData();
-
-      for (const key in params) {
-        const value = params[key];
-
-        if (value instanceof File || value instanceof Blob) {
-          formData.append(key, value);
-        } else if (Array.isArray(value)) {
-          value.forEach(item => {
-            if (item instanceof File || item instanceof Blob) formData.append(key, item);
-            else formData.append(key, item); // append string URLs or other primitives
-          });
-        } else if (typeof value === "object") {
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, value);
-        }
+  if (contentType.includes("multipart/form-data")) {
+    // Buffer already from client, send directly
+    headers["Content-Type"] = contentType;
+  } else if (contentType.includes("application/json")) {
+    // Check if rawData is stringified JSON
+    if (typeof rawData === "string") {
+      try {
+        requestData = JSON.parse(rawData);
+      } catch {
+        requestData = rawData; // Not JSON, leave as-is
       }
-
-      requestData = formData;
-      headers = {}; // browser will set multipart boundary
     }
-
-    const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
-    return response;
-
-  } catch (error) {
-    console.error("Error in postData:", error);
-    throw error;
+    headers["Content-Type"] = "application/json";
+  } else {
+    headers["Content-Type"] = contentType || "application/octet-stream";
   }
-};
+
+  return { data: requestData, headers };
+}
