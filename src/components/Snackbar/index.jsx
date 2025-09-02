@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
 import styles from "@/css/Snackbar.module.css";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SnackbarContext = createContext();
 
