@@ -2,9 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { setCookie } from "cookies-next";
 import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/ProductDetail.module.css";
-import { setCookie } from "cookies-next";
 
 const ProductDetail = ({ productData }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -48,8 +48,8 @@ const ProductDetail = ({ productData }) => {
 
       {/* Right Side Details */}
       <div className={styles.right}>
-        <h2 className={styles.productName}>Shirt</h2>
-        <p className={styles.price}>Rs 2000</p>
+        <h2 className={styles.productName}>{productData?.name}</h2>
+        <p className={styles.price}>Rs {productData?.price}</p>
 
         <div className={styles.sizes}>
           <span>Sizes:</span>

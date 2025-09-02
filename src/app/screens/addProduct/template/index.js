@@ -1,13 +1,13 @@
 "use client";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
+import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/AddProduct.module.css";
+import React, { useState, useEffect } from "react";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 import UploadImageSection from "@/components/UploadImageSection";
-import { apiConfig } from "@/config/apiConfig";
-import { useRouter } from "next/navigation";
 const ProductForm = ({ editId }) => {
   //Hooks
   const router = useRouter();
@@ -155,13 +155,16 @@ const ProductForm = ({ editId }) => {
   const updateProduct = async (formData) => {
     try {
       setLoading(true);
-      const res = await axios.put(`/addProduct/api/${editId?._id}`, formData);
+      const res = await axios.put(
+        `/screens/addProduct/api/${editId?._id}`,
+        formData,
+      );
       if (res?.status === 200) {
         showAlertMessage({
           message: res?.data.message,
           type: "success",
         });
-        router.push("/screens/addProduct")
+        router.push("/screens/addProduct");
         resetForm();
       } else {
         showAlertMessage({

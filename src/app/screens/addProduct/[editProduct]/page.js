@@ -1,10 +1,8 @@
-import React from 'react'
-import UpdateForm from './template'
+import React from "react";
+import UpdateForm from "./template";
 
 const Update = () => {
-    return (
-        <UpdateForm />
-    )
-}
+  return <UpdateForm />;
+};
 
-export default Update
+export default Update;
