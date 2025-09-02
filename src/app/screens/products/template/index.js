@@ -40,7 +40,7 @@ const Products = () => {
         data: { id },
       });
 
-      if (res?.status === 201) {
+      if (res?.status === 200) {
         showAlertMessage({ message: res.data.message, type: "success" });
 
         setProducts((prev) => prev.filter((exp) => exp._id !== id));

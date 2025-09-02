@@ -28,7 +28,7 @@ export async function POST(req) {
     }
 
     // Send to external API
-    const response = await axiosClient.post(apiConfig.addProduct, requestData, {
+    const response = await axiosClient.post(apiConfig.addProduct.create, requestData, {
       headers,
     });
 

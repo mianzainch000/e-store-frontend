@@ -1,14 +1,16 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/AddProduct.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 import UploadImageSection from "@/components/UploadImageSection";
-
-const ProductForm = () => {
+import { apiConfig } from "@/config/apiConfig";
+import { useRouter } from "next/navigation";
+const ProductForm = ({ editId }) => {
   //Hooks
+  const router = useRouter();
   const showAlertMessage = useSnackbar();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -17,6 +19,24 @@ const ProductForm = () => {
   const [sizes, setSizes] = useState([]);
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // useEffect for update data
+
+  useEffect(() => {
+    if (editId) {
+      setName(editId.name || "");
+      setPrice(editId.price || "");
+      setDescription(editId.description || "");
+      setCategory(editId.category || "");
+
+      const formattedImages = (editId.images || []).map((imgPath) => ({
+        url: `${apiConfig.baseUrl}${imgPath.replace(/\\/g, "/")}`,
+      }));
+      setImages(formattedImages);
+
+      setSizes(editId.sizes || []);
+    }
+  }, [editId]);
 
   // Functions
 
@@ -131,6 +151,34 @@ const ProductForm = () => {
       setLoading(false);
     }
   };
+
+  const updateProduct = async (formData) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/addProduct/api/${editId?._id}`, formData);
+      if (res?.status === 200) {
+        showAlertMessage({
+          message: res?.data.message,
+          type: "success",
+        });
+        resetForm();
+      } else {
+        showAlertMessage({
+          message: res?.data?.message || "Something went wrong",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      const { message } = handleAxiosError(error);
+      showAlertMessage({
+        message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Form Submit
 
   const handleSubmit = async (e) => {
@@ -159,7 +207,11 @@ const ProductForm = () => {
 
     formData.append("imageOrder", JSON.stringify(imageOrder));
 
-    await addProduct(formData);
+    if (!editId?._id) {
+      await addProduct(formData);
+    } else {
+      await updateProduct(formData);
+    }
   };
 
   return (
@@ -167,7 +219,10 @@ const ProductForm = () => {
       {loading && <Loader />}
       <div className={styles.wrapper}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h2 className={styles.title}>Add Product</h2>
+          <h2 className={styles.title}>
+            {" "}
+            {editId?._id ? "Update Product" : "Add Product"}
+          </h2>
 
           <input
             type="text"
@@ -212,7 +267,7 @@ const ProductForm = () => {
           />
 
           <button type="submit" className={styles.submitBtn}>
-            Add Product
+            {editId?._id ? "Update Product" : "Add Product"}
           </button>
         </form>
       </div>

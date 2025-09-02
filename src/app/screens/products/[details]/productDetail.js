@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";

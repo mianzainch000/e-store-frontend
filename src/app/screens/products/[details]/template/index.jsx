@@ -4,11 +4,18 @@ import Image from "next/image";
 import { useState } from "react";
 import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/ProductDetail.module.css";
+import { setCookie } from "cookies-next";
 
 const ProductDetail = ({ productData }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const images =
     productData?.images?.map((img) => img.replace(/\\/g, "/")) || [];
+
+  const handleEdit = (product) => {
+    setCookie(`expense_${product._id}`, JSON.stringify(product), {
+      maxAge: 60 * 60 * 24 * 7,
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -54,7 +61,12 @@ const ProductDetail = ({ productData }) => {
         </div>
 
         <button className={styles.cartBtn}>Add to Cart</button>
-        <Link href={"/"} className={styles.editBtn}>
+        <Link
+          href={`/screens/addProduct/${productData?._id}`}
+          className={styles.editBtn}
+          onClick={() => handleEdit(productData)}
+        >
+          {" "}
           Edit
         </Link>
       </div>
