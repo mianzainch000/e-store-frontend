@@ -28,14 +28,16 @@ export async function POST(req) {
     }
 
     // Send to external API
-    const response = await axiosClient.post(apiConfig.addProduct, requestData, { headers });
+    const response = await axiosClient.post(apiConfig.addProduct, requestData, {
+      headers,
+    });
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (err) {
     console.error("Route API Error:", err);
     return NextResponse.json(
       { message: err?.response?.data?.message || "Server Error" },
-      { status: err?.response?.status || 500 }
+      { status: err?.response?.status || 500 },
     );
   }
 }

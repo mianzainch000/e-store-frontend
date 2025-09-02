@@ -1,29 +1,31 @@
 .cardContainer {
+  gap: 34px;
   display: flex;
+  padding: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 34px;
-  padding: 20px;
 }
 
 /* NEW: Category Button Filter */
 .categoryContainer {
-  display: flex;
-  flex-wrap: wrap;
   gap: 15px;
-  justify-content: center;
+  display: flex;
   padding: 20px;
-  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
   margin-bottom: 20px;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .categoryItem {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
 }
 
 .categoryItem:hover {
@@ -31,7 +33,7 @@
 }
 
 .activeCategory {
-  background-color: #000;
   color: #fff;
   border-color: #000;
+  background-color: #000;
 }

@@ -1,86 +1,60 @@
-import { apiConfig } from "@/config/apiConfig";
+import { NextResponse } from "next/server";
 import axiosClient from "@/config/axiosClient";
+import { apiConfig } from "@/config/apiConfig";
 
-// POST request handler for Next.js API route
+export const config = { api: { bodyParser: false } };
+export const runtime = "nodejs"; // Node.js runtime for buffer handling
+
 export async function POST(req) {
   try {
-    let body = {};
-
     const contentType = req.headers.get("content-type") || "";
 
+    let requestData;
+    let headers = {};
+
     if (contentType.includes("multipart/form-data")) {
-      const formData = await req.formData();
-
-      for (const [key, value] of formData.entries()) {
-        try {
-          // If the value is JSON (like your sizes or imageOrder), parse it
-          body[key] = JSON.parse(value);
-        } catch {
-          body[key] = value;
-        }
-      }
+      // Forward raw buffer for multipart/form-data
+      // Backend can parse if needed
+      requestData = Buffer.from(await req.arrayBuffer());
+      headers["Content-Type"] = contentType; // browser boundary included
     } else if (contentType.includes("application/json")) {
-      body = await req.json();
+      // Parse JSON if needed, else use as-is
+      requestData = await parseJSON(req);
+      headers["Content-Type"] = "application/json";
     } else {
-      throw new Error("Unsupported content type: " + contentType);
+      // Fallback: unknown content-type → raw buffer
+      requestData = Buffer.from(await req.arrayBuffer());
+      headers["Content-Type"] = contentType || "application/octet-stream";
     }
 
-    const data = await postData(body);
-
-    return new Response(JSON.stringify(data?.data), {
-      status: data?.status || 200,
-    });
-  } catch (error) {
-    console.error("Error in POST handler:", error);
-
-    return new Response(
-      JSON.stringify({
-        message: "Error occurred while processing the request",
-      }),
-      { status: 500 },
-    );
-  }
-}
-
-// Function to forward complex data to external API
-export const postData = async (params) => {
-  try {
-    // Default headers (assuming no file upload)
-    let headers = { "Content-Type": "application/json" };
-    let requestData = params;
-
-    // Check if files are present in the params
-    const isFilePresent = Object.values(params).some(
-      (value) => value instanceof File || value instanceof Blob,
-    );
-
-    // If files are present, use FormData
-    if (isFilePresent) {
-      const formData = new FormData();
-      for (const key in params) {
-        if (params[key] instanceof Array || params[key] instanceof Object) {
-          // If data is an array or object, stringify it before appending
-          formData.append(key, JSON.stringify(params[key]));
-        } else if (params[key] instanceof File || params[key] instanceof Blob) {
-          // If data is a file or blob, append as is
-          formData.append(key, params[key]);
-        } else {
-          // Otherwise, append the data as it is
-          formData.append(key, params[key]);
-        }
-      }
-      requestData = formData;
-      headers = {}; // Set header for FormData
-    }
-
-    // Send the data using axiosClient
+    // Send to external API
     const response = await axiosClient.post(apiConfig.signup, requestData, {
       headers,
     });
 
-    return response; // Return the response from external API
-  } catch (error) {
-    console.error("Error in postData:", error);
-    throw error; // Propagate error
+    return NextResponse.json(response.data, { status: response.status });
+  } catch (err) {
+    console.error("Route API Error:", err);
+    return NextResponse.json(
+      { message: err?.response?.data?.message || "Server Error" },
+      { status: err?.response?.status || 500 },
+    );
   }
-};
+}
+
+// Safely parse JSON if needed
+async function parseJSON(req) {
+  try {
+    const data = await req.json(); // Already parsed JSON returned as-is
+    return data;
+  } catch {
+    // Fallback: raw text / primitive
+    const textData = await req.text();
+    // Try parsing stringified JSON if possible
+    try {
+      return JSON.parse(textData);
+    } catch {
+      return textData;
+    }
+  }
+}

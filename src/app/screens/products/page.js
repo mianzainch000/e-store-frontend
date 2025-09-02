@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import Loader from "@/components/Loader";
+import { setCookie } from "cookies-next";
 import styles from "./Products.module.css";
 import { apiConfig } from "@/config/apiConfig";
 import React, { useState, useEffect } from "react";
@@ -35,6 +36,11 @@ const Products = () => {
     getProducts();
   }, []);
 
+  const handleEdit = (row) => {
+    setCookie(`expense_${row._id}`, JSON.stringify(row), {
+      maxAge: 60 * 60 * 24 * 7,
+    });
+  };
   return (
     <div>
       {loading && <Loader />}
@@ -46,7 +52,8 @@ const Products = () => {
               key={product._id}
               image={`${apiConfig.baseUrl}${product.images?.[0]}`}
               price={product.price}
-            // productId={product._id}
+              productId={product._id}
+              onClick={() => handleEdit(product)}
             />
           ))}
         </div>
