@@ -1,4 +1,5 @@
 import "./globals.css";
+import NextLoader from "@/components/NextTopLoader";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SnackbarProvider } from "@/components/Snackbar";
 
@@ -24,7 +25,11 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <SnackbarProvider>{children}</SnackbarProvider>
+        <SnackbarProvider>
+          {" "}
+          <NextLoader />
+          {children}
+        </SnackbarProvider>
       </body>
     </html>
   );

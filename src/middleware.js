@@ -9,7 +9,8 @@ const publicPages = [
 ];
 
 const protectedPages = [
-  "/screens/prdoducts",
+  "/screens/products",
+  "/screens/addProduct",
 
   // Add other protected pages here if needed
 ];
