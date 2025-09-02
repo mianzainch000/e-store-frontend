@@ -161,6 +161,7 @@ const ProductForm = ({ editId }) => {
           message: res?.data.message,
           type: "success",
         });
+        router.push("/screens/addProduct")
         resetForm();
       } else {
         showAlertMessage({
