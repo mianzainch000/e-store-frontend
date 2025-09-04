@@ -110,3 +110,37 @@ const { id } = params;
     }
 
 }
+
+Another function form data this is very simple
+
+import { apiConfig } from "@/config/apiConfig";
+import axiosClient from "@/config/axiosClient";
+
+export const postData = async (formData) => {
+return await axiosClient.post(apiConfig.signup, formData, {
+headers: {
+"Content-Type": "multipart/form-data",
+},
+});
+};
+
+export async function POST(req) {
+try {
+const formData = await req.formData(); // FormData read karna
+
+    // FormData ko axiosClient me directly pass kar do
+    const data = await postData(formData);
+
+    return new Response(JSON.stringify(data?.data), {
+      status: data?.status, // custom status code
+    });
+
+} catch (error) {
+return new Response(
+JSON.stringify({
+message: error?.response?.data || "Something went wrong",
+}),
+{ status: error?.response?.status || 500 }
+);
+}
+}
