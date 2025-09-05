@@ -1,7 +1,6 @@
-// ==============================================================================================
-
 import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
+// ==============================================================================================
 
 export const updateExpense = async (id, data) => {
   return await axiosClient.put(`${apiConfig.expenseForm.update}/${id}`, data);
@@ -56,7 +55,6 @@ export async function PUT(req, { params }) {
 // }
 
 // ==============================================================================================
-
 
 // import { NextResponse } from "next/server";
 // import axiosClient from "@/config/axiosClient";
