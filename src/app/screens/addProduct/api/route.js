@@ -2,6 +2,7 @@
 
 import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
+
 export const postData = async (formData) => {
   return await axiosClient.post(apiConfig.addProduct.create, formData);
 };
@@ -51,5 +52,6 @@ export async function POST(req) {
 //     );
 //   }
 // }
+
 
 // ==============================================================================================

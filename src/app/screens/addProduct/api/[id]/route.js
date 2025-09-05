@@ -1,40 +1,58 @@
+// ==============================================================================================
+
 import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
 
-// ✅ Update product with PUT
-export const putData = async (id, formData) => {
-  return await axiosClient.put(`${apiConfig.addProduct.update}/${id}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const updateExpense = async (id, data) => {
+  return await axiosClient.put(`${apiConfig.expenseForm.update}/${id}`, data);
 };
 
-// ✅ Next.js Route Handler for PUT
 export async function PUT(req, { params }) {
-  try {
-    const { id } = params; // ✅ id from URL /api/products/[id]
-    if (!id) {
-      return new Response(
-        JSON.stringify({ message: "Product ID is required in params" }),
-        { status: 400 }
-      );
-    }
+  const body = await req.formData();
+  const response = await updateExpense(params.id, body);
 
-    const formData = await req.formData();
-
-    // ✅ Send request with id
-    const data = await putData(id, formData);
-
-    return new Response(JSON.stringify(data?.data), {
-      status: data?.status,
-    });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({
-        message: error?.response?.data || "Something went wrong",
-      }),
-      { status: error?.response?.status || 500 }
-    );
-  }
+  return new Response(JSON.stringify(response.data), {
+    status: response.status,
+  });
 }
+
+// // ==============================================================================================
+
+// import { NextResponse } from "next/server";
+// import axiosClient from "@/config/axiosClient";
+// import { apiConfig } from "@/config/apiConfig";
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
+// export async function PUT(req, { params }) {
+//   try {
+//     const { id } = params;
+//     const contentType = req.headers.get("content-type");
+//     const buffer = Buffer.from(await req.arrayBuffer());
+//     const response = await axiosClient.put(
+//       `${apiConfig.productForm.update}/${id}`,
+//       buffer,
+//       {
+//         headers: {
+//           "Content-Type": contentType,
+//         },
+//       }
+//     );
+//     return NextResponse.json(response.data, { status: response.status });
+//   } catch (error) {
+//     console.error("Update Route API Error:", error);
+
+//     return NextResponse.json(
+//       {
+//         message: error?.response?.data?.message || "Server Error",
+//       },
+//       {
+//         status: error?.response?.status || 500,
+//       }
+//     );
+//   }
+// }
+
+// ==============================================================================================
