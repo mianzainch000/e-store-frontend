@@ -6,27 +6,23 @@ const axiosClient = axios.create({
   baseURL: apiConfig.baseUrl,
   responseType: "json",
   validateStatus: () => true,
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Interceptor for token + FormData handling
-axiosClient.interceptors.request.use((config) => {
-  let token;
+axiosClient.interceptors.request.use(function (config) {
+  const sessionInfo = cookies().get("sessionToken");
 
-  // Server-side
-  try {
-    token = cookies().get("sessionToken")?.value;
-  } catch {}
-
-  // Client-side
-  if (!token && typeof window !== "undefined") {
-    const match = document.cookie.match(/sessionToken=([^;]+)/);
-    token = match ? match[1] : null;
-  }
-
-  if (token) {
+  if (sessionInfo?.value) {
+    const token = sessionInfo.value;
     config.headers["Authorization"] = `Bearer ${token}`;
   }
+
+  config.headers["Content-Type"] =
+    config.data instanceof FormData
+      ? "multipart/form-data"
+      : "application/json";
 
   return config;
 });

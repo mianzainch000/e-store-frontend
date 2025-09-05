@@ -1,64 +1,40 @@
-import { NextResponse } from "next/server";
-import axiosClient from "@/config/axiosClient";
 import { apiConfig } from "@/config/apiConfig";
+import axiosClient from "@/config/axiosClient";
 
-export const config = { api: { bodyParser: false } };
-export const runtime = "nodejs"; // Node.js runtime for buffer handling
+// ✅ Update product with PUT
+export const putData = async (id, formData) => {
+  return await axiosClient.put(`${apiConfig.addProduct.update}/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
+// ✅ Next.js Route Handler for PUT
 export async function PUT(req, { params }) {
   try {
-    const contentType = req.headers.get("content-type") || "";
-
-    let requestData;
-    let headers = {};
-
-    if (contentType.includes("multipart/form-data")) {
-      // Forward raw buffer for multipart/form-data
-      // Backend can parse if needed
-      requestData = Buffer.from(await req.arrayBuffer());
-      headers["Content-Type"] = contentType; // browser boundary included
-    } else if (contentType.includes("application/json")) {
-      // Parse JSON if needed, else use as-is
-      requestData = await parseJSON(req);
-      headers["Content-Type"] = "application/json";
-    } else {
-      // Fallback: unknown content-type → raw buffer
-      requestData = Buffer.from(await req.arrayBuffer());
-      headers["Content-Type"] = contentType || "application/octet-stream";
+    const { id } = params; // ✅ id from URL /api/products/[id]
+    if (!id) {
+      return new Response(
+        JSON.stringify({ message: "Product ID is required in params" }),
+        { status: 400 }
+      );
     }
-    const { id } = params;
-    // Send to external API
-    const response = await axiosClient.put(
-      `${apiConfig.addProduct.update}/${id}`,
-      requestData,
-      {
-        headers,
-      },
-    );
 
-    return NextResponse.json(response.data, { status: response.status });
-  } catch (err) {
-    console.error("Route API Error:", err);
-    return NextResponse.json(
-      { message: err?.response?.data?.message || "Server Error" },
-      { status: err?.response?.status || 500 },
-    );
-  }
-}
+    const formData = await req.formData();
 
-// Safely parse JSON if needed
-async function parseJSON(req) {
-  try {
-    const data = await req.json(); // Already parsed JSON returned as-is
-    return data;
-  } catch {
-    // Fallback: raw text / primitive
-    const textData = await req.text();
-    // Try parsing stringified JSON if possible
-    try {
-      return JSON.parse(textData);
-    } catch {
-      return textData;
-    }
+    // ✅ Send request with id
+    const data = await putData(id, formData);
+
+    return new Response(JSON.stringify(data?.data), {
+      status: data?.status,
+    });
+  } catch (error) {
+    return new Response(
+      JSON.stringify({
+        message: error?.response?.data || "Something went wrong",
+      }),
+      { status: error?.response?.status || 500 }
+    );
   }
 }
