@@ -14,10 +14,6 @@ const ProductDetail = ({ productData }) => {
 
   // Local state copy for runtime updates
   const [localProductData, setLocalProductData] = useState(null);
-
-  useEffect(() => {
-    setLocalProductData(productData);
-  }, [productData]);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
@@ -30,6 +26,11 @@ const ProductDetail = ({ productData }) => {
 
   // Sizes for current selected image
   const currentSizes = localProductData?.sizes?.[selectedImageIndex] || [];
+
+  // data show
+  useEffect(() => {
+    setLocalProductData(productData);
+  }, [productData]);
 
   // Update total price whenever quantity or price changes
   useEffect(() => {
