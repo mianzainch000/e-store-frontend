@@ -26,8 +26,8 @@ const ProductDetail = ({ productData }) => {
   const currentSizes = productData?.sizes?.[selectedImageIndex] || [];
 
   const handleEdit = (product) => {
-    setCookie(`expense_${product._id}`, JSON.stringify(product), {
-      maxAge: 60 * 60 * 24 * 7,
+    setCookie(`editData_${product._id}`, JSON.stringify(product), {
+      maxAge: 24 * 60 * 60,
     });
   };
 
