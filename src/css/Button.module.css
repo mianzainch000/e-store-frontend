@@ -1,0 +1,64 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+/* Variants */
+.primary {
+  background: #4a90e2;
+  color: white;
+}
+
+.primary:hover {
+  background: #357abd;
+}
+
+.secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.secondary:hover {
+  background: #e0e0e0;
+}
+
+.danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.danger:hover {
+  background: #c0392b;
+}
+
+.google {
+  background: var(--btn-google-bg);
+  border: 1px solid var(--btn-google-border);
+  color: #333;
+}
+
+.google:hover {
+  background: var(--btn-google-hover-bg);
+}
+
+/* Disabled */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
