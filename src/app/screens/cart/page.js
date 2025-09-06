@@ -4,9 +4,9 @@ import Image from "next/image";
 import Loader from "@/components/Loader";
 import styles from "@/css/Cart.module.css";
 import { useState, useEffect } from "react";
+import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import { apiConfig } from "@/config/apiConfig";
 
 export default function CartPage() {
   const [cart, setCarts] = useState([]);
@@ -17,7 +17,6 @@ export default function CartPage() {
     setLoading(true);
     try {
       const res = await axios.get("cart/api");
-      console.log(res, "ressssssssssssssssssssssssssss");
       const cartItems = res?.data?.cart || [];
       setCarts(cartItems);
     } catch (error) {
@@ -128,7 +127,7 @@ export default function CartPage() {
                 Rs{" "}
                 {cart.reduce(
                   (acc, item) => acc + item.price * item.quantity,
-                  0
+                  0,
                 )}
               </span>
             </div>
@@ -143,11 +142,18 @@ export default function CartPage() {
                 Rs{" "}
                 {cart.reduce(
                   (acc, item) => acc + item.price * item.quantity,
-                  0
+                  0,
                 ) + 0}
               </span>
             </div>
             <button className={styles.checkoutBtn}>Checkout</button>
+            <button
+              type="button"
+              onClick={handleDeleteAllCart}
+              className={styles.removeAllBtn}
+            >
+              Remove All Cart Items
+            </button>
           </div>
         </div>
       </div>

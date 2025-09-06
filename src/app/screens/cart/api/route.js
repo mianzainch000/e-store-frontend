@@ -11,7 +11,6 @@ export async function GET() {
   return Response.json(data?.data);
 }
 
-
 export const deleteAllCart = async () => {
   return await axiosClient.delete(apiConfig.cart.removeAll); // no ID needed
 };

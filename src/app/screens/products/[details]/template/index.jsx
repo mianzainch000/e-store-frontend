@@ -77,8 +77,8 @@ const ProductDetail = ({ productData }) => {
             imgSizes.map((size, sizeIndex) =>
               imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
                 ? { ...size, quantity: size.quantity - quantity }
-                : size
-            )
+                : size,
+            ),
           ),
         }));
 

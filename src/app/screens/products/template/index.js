@@ -119,8 +119,9 @@ const Products = () => {
           {/* Show All only if 2 or more categories exist */}
           {uniqueCategories.length > 1 && (
             <li
-              className={`${styles.categoryItem} ${selectedCategory === "all" ? styles.active : ""
-                }`}
+              className={`${styles.categoryItem} ${
+                selectedCategory === "all" ? styles.active : ""
+              }`}
               onClick={() => setSelectedCategory("all")}
             >
               All
@@ -131,8 +132,9 @@ const Products = () => {
           {uniqueCategories.map((category) => (
             <li
               key={category}
-              className={`${styles.categoryItem} ${selectedCategory === category ? styles.active : ""
-                }`}
+              className={`${styles.categoryItem} ${
+                selectedCategory === category ? styles.active : ""
+              }`}
               onClick={() => setSelectedCategory(category)}
             >
               {category}
