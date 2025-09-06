@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
+import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
@@ -91,30 +92,21 @@ const Login = () => {
           <h2 className={styles.title}>Welcome Back 👋</h2>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            <input
+            <TextInput
               type="email"
               placeholder="Email"
-              className={styles.inputField}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className={styles.inputField}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className={styles.toggleBtn}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
-            </div>
+            <TextInput
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              endIcon={showPassword ? "🙈" : "👁️"}
+              onEndIconClick={() => setShowPassword(!showPassword)}
+            />
 
             <div className={styles.forgotWrapper}>
               <Link href="/auth/forgotPassword" className={styles.forgotLink}>

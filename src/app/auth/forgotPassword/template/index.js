@@ -6,6 +6,7 @@ import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
 import { apiConfig } from "@/config/apiConfig";
+import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
@@ -88,10 +89,9 @@ const ForgotPassword = () => {
           </p>
 
           <form className={styles.form} onSubmit={handleSubmit}>
-            <input
+            <TextInput
               type="email"
-              placeholder="Enter your email"
-              className={styles.inputField}
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

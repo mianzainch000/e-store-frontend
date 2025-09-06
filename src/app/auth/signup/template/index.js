@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
+import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
@@ -126,63 +127,44 @@ const Signup = () => {
           <h2 className={styles.title}>Create Account ✨</h2>
 
           <form className={styles.form} onSubmit={handleSubmit}>
-            <input
-              type="text"
+            <TextInput
               placeholder="First Name"
-              className={styles.inputField}
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
 
-            <input
-              type="text"
+            <TextInput
               placeholder="Last Name"
-              className={styles.inputField}
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
 
-            <input
+            <TextInput
               type="email"
               placeholder="Email"
-              className={styles.inputField}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className={styles.inputField}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className={styles.toggleBtn}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
-            </div>
+            <TextInput
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              endIcon={showPassword ? "🙈" : "👁️"}
+              onEndIconClick={() => setShowPassword(!showPassword)}
+            />
 
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                placeholder="Confirm Password"
-                className={styles.inputField}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className={styles.toggleBtn}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? "🙈" : "👁️"}
-              </button>
-            </div>
+            <TextInput
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              endIcon={showConfirmPassword ? "🙈" : "👁️"}
+              onEndIconClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+            />
 
             <button type="submit" className={styles.submitBtn}>
               Signup
