@@ -1,14 +1,14 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { setCookie } from "cookies-next";
+import Loader from "@/components/Loader";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/ProductDetail.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import Loader from "@/components/Loader";
-import axios from "axios";
 
 const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
