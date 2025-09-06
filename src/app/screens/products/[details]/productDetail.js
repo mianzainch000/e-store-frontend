@@ -9,7 +9,7 @@ const DetailPage = () => {
   const [productData, setProductData] = useState(null);
 
   useEffect(() => {
-    const storedData = getCookie(`expense_${productId}`);
+    const storedData = getCookie(`products_${productId}`);
     if (storedData) {
       const data = JSON.parse(storedData);
       setProductData(data);
