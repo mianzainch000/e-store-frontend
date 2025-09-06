@@ -2,7 +2,6 @@
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import { setCookie } from "cookies-next";
 import Loader from "@/components/Loader";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
@@ -12,27 +11,32 @@ import handleAxiosError from "@/components/HandleAxiosError";
 
 const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
+
+  // Local state copy for runtime updates
+  const [localProductData, setLocalProductData] = useState(null);
+
+  useEffect(() => {
+    setLocalProductData(productData);
+  }, [productData]);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // images normalize
+  // Normalize images
   const images =
-    productData?.images?.map((img) => img.replace(/\\/g, "/")) || [];
+    localProductData?.images?.map((img) => img.replace(/\\/g, "/")) || [];
 
-  // current image ke sizes
-  const currentSizes = productData?.sizes?.[selectedImageIndex] || [];
+  // Sizes for current selected image
+  const currentSizes = localProductData?.sizes?.[selectedImageIndex] || [];
 
-  const handleEdit = (product) => {
-    setCookie(`editData_${product._id}`, JSON.stringify(product), {
-      maxAge: 24 * 60 * 60,
-    });
-  };
+  // Update total price whenever quantity or price changes
+  useEffect(() => {
+    setTotalPrice(localProductData?.price * quantity);
+  }, [localProductData?.price, quantity]);
 
-  // quantity
-
+  // Handle quantity input change
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value) || 1;
     const maxQty = currentSizes[selectedSizeIndex]?.quantity || 0;
@@ -42,37 +46,43 @@ const ProductDetail = ({ productData }) => {
         message: `Available quantity is only ${maxQty}`,
         type: "error",
       });
-
-      setQuantity(maxQty); // force to max
+      setQuantity(maxQty);
     } else {
       setQuantity(value);
     }
   };
 
-  // total Price
-
-  useEffect(() => {
-    setTotalPrice(productData?.price * quantity);
-  }, [productData?.price, quantity]);
-
-  // ✅ Add to cart api
+  // Add to cart
   const addToCart = async () => {
+    if (!currentSizes[selectedSizeIndex]) return;
+
     try {
       setLoading(true);
 
       const payload = {
-        productId: productData._id,
-        sizeName: currentSizes[selectedSizeIndex]?.name,
+        productId: localProductData._id,
+        sizeName: currentSizes[selectedSizeIndex].name,
         quantity,
       };
 
       const res = await axios.post("/screens/products/api", payload);
 
       if (res?.status === 201) {
-        showAlertMessage({
-          message: res?.data.message,
-          type: "success",
-        });
+        showAlertMessage({ message: res?.data.message, type: "success" });
+
+        // Runtime update of selected size quantity
+        setLocalProductData((prev) => ({
+          ...prev,
+          sizes: prev.sizes.map((imgSizes, imgIndex) =>
+            imgSizes.map((size, sizeIndex) =>
+              imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
+                ? { ...size, quantity: size.quantity - quantity }
+                : size
+            )
+          ),
+        }));
+
+        setQuantity(1); // Reset quantity input
       } else {
         showAlertMessage({
           message: res?.data?.message || "Something went wrong",
@@ -81,10 +91,7 @@ const ProductDetail = ({ productData }) => {
       }
     } catch (error) {
       const { message } = handleAxiosError(error);
-      showAlertMessage({
-        message,
-        type: "error",
-      });
+      showAlertMessage({ message, type: "error" });
     } finally {
       setLoading(false);
     }
@@ -94,7 +101,7 @@ const ProductDetail = ({ productData }) => {
     <>
       {loading && <Loader />}
       <div className={styles.container}>
-        {/* Left Side Images */}
+        {/* Left: Images */}
         <div className={styles.left}>
           {images.length > 0 && (
             <Image
@@ -105,7 +112,6 @@ const ProductDetail = ({ productData }) => {
               className={styles.mainImage}
             />
           )}
-
           <div className={styles.thumbnails}>
             {images.map((img, index) => (
               <Image
@@ -119,7 +125,7 @@ const ProductDetail = ({ productData }) => {
                 }
                 onClick={() => {
                   setSelectedImageIndex(index);
-                  setSelectedSizeIndex(0); // reset size when image changes
+                  setSelectedSizeIndex(0);
                   setQuantity(1);
                 }}
               />
@@ -127,29 +133,26 @@ const ProductDetail = ({ productData }) => {
           </div>
         </div>
 
-        {/* Right Side Details */}
+        {/* Right: Details */}
         <div className={styles.right}>
-          <h2 className={styles.productName}>{productData?.name}</h2>
-          <p className={styles.price}>Rs {productData?.price}</p>
+          <h2 className={styles.productName}>{localProductData?.name}</h2>
+          <p className={styles.price}>Rs {localProductData?.price}</p>
 
-          {/* Sizes per image */}
+          {/* Sizes */}
           <div className={styles.sizes}>
             <span>Sizes:</span>
-            <>
-              {currentSizes.map((s, index) => (
-                <button
-                  key={index}
-                  className={`${styles.sizeBtn} ${
-                    index === selectedSizeIndex ? styles.activeSize : ""
-                  }`}
-                  onClick={() => setSelectedSizeIndex(index)}
-                >
-                  {s.name} ({s.quantity})
-                </button>
-              ))}
-            </>
+            {currentSizes.map((s, index) => (
+              <button
+                key={index}
+                className={`${styles.sizeBtn} ${index === selectedSizeIndex ? styles.activeSize : ""}`}
+                onClick={() => setSelectedSizeIndex(index)}
+              >
+                {s.name} ({s.quantity})
+              </button>
+            ))}
           </div>
 
+          {/* Quantity */}
           <div className={styles.quantity}>
             <span>Quantity:</span>
             <input
@@ -161,32 +164,19 @@ const ProductDetail = ({ productData }) => {
             />
           </div>
 
-          {/* Selected Size Info */}
-          {currentSizes.length > 0 && (
-            <div className={styles.selectedInfo}>
-              {/* <p>
-              Selected Size:{" "}
-              <strong>{currentSizes[selectedSizeIndex]?.name}</strong>
-            </p> */}
-              <p>
-                Quantity:{" "}
-                <strong>{currentSizes[selectedSizeIndex]?.quantity}</strong>
-              </p>
-            </div>
-          )}
-
+          {/* Total Price */}
           <div className={styles.total}>
             <span>Total Price:</span>
             <strong>Rs. {totalPrice}</strong>
           </div>
 
+          {/* Buttons */}
           <button className={styles.cartBtn} onClick={addToCart}>
             Add to Cart
           </button>
           <Link
-            href={`/screens/addProduct/${productData?._id}`}
+            href={`/screens/addProduct/${localProductData?._id}`}
             className={styles.editBtn}
-            onClick={() => handleEdit(productData)}
           >
             Edit
           </Link>
