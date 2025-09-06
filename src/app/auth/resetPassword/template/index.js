@@ -7,9 +7,9 @@ import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
 import { apiConfig } from "@/config/apiConfig";
 import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import CustomButton from "@/components/Button";
 
 const ResetPassword = () => {
   //Hooks
@@ -76,7 +76,7 @@ const ResetPassword = () => {
       setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.resetPassword}`,
-        { email, otp, newPassword: password }
+        { email, otp, newPassword: password },
       );
       if (res?.status === 200) {
         showAlertMessage({

@@ -6,9 +6,9 @@ import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
 import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import CustomButton from "@/components/Button";
 
 const Signup = () => {
   // Hooks
@@ -167,11 +167,7 @@ const Signup = () => {
               }
             />
 
-            <CustomButton
-              type="submit"
-              text="Signup"
-              variant="primary"
-            />
+            <CustomButton type="submit" text="Signup" variant="primary" />
           </form>
 
           <p className={styles.loginText}>

@@ -7,9 +7,9 @@ import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
 import { apiConfig } from "@/config/apiConfig";
 import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import CustomButton from "@/components/Button";
 
 const ForgotPassword = () => {
   // Hooks
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
       setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.forgotPassword}`,
-        { email }
+        { email },
       );
       if (res?.status === 200) {
         showAlertMessage({

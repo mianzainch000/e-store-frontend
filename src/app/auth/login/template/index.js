@@ -6,9 +6,9 @@ import { signIn } from "next-auth/react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import CustomButton from "@/components/Button";
 
 const Login = () => {
   // Hooks
@@ -122,7 +122,14 @@ const Login = () => {
             type="button"
             text="Login with Google"
             variant="google"
-            startIcon={<Image src="/google-icon.svg" alt="Google" width={20} height={20} />}
+            startIcon={
+              <Image
+                src="/google-icon.svg"
+                alt="Google"
+                width={20}
+                height={20}
+              />
+            }
           />
 
           <p className={styles.loginText}>
