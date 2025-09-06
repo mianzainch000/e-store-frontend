@@ -55,18 +55,9 @@ const ProductDetail = ({ productData }) => {
     setTotalPrice(productData?.price * quantity);
   }, [productData?.price, quantity]);
 
-  //  Add to cart api
-
   // ✅ Add to cart api
   const addToCart = async () => {
     try {
-      if (!currentSizes[selectedSizeIndex]) {
-        return showAlertMessage({
-          message: "Please select a size",
-          type: "error",
-        });
-      }
-
       setLoading(true);
 
       const payload = {
