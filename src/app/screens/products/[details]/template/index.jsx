@@ -13,12 +13,12 @@ const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
 
   // Local state copy for runtime updates
-  const [localProductData, setLocalProductData] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [localProductData, setLocalProductData] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   // Normalize images
   const images =
@@ -78,8 +78,8 @@ const ProductDetail = ({ productData }) => {
             imgSizes.map((size, sizeIndex) =>
               imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
                 ? { ...size, quantity: size.quantity - quantity }
-                : size,
-            ),
+                : size
+            )
           ),
         }));
 
