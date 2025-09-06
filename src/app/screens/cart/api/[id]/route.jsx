@@ -2,7 +2,7 @@ import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
 
 export const deleteUser = async (id) => {
-  return await axiosClient.delete(apiConfig.products.delete + `/${id}`);
+  return await axiosClient.delete(apiConfig.cart.delete + `/${id}`);
 };
 
 export async function DELETE(req) {

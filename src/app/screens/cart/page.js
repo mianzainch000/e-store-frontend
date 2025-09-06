@@ -34,6 +34,26 @@ export default function CartPage() {
         getCarts();
     }, []);
 
+    const handleDelete = async (id) => {
+        try {
+            setLoading(true);
+            const res = await axios.delete(`cart/api/${id}`, { data: { id } });
+
+            if (res?.status === 200) {
+                showAlertMessage({ message: res.data.message, type: "success" });
+                setCarts((prev) => prev.filter((car) => car._id !== id));
+            }
+        } catch (error) {
+            const { message } = handleAxiosError(error);
+            showAlertMessage({
+                message,
+                type: "error",
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             {loading && <Loader />}
@@ -66,7 +86,12 @@ export default function CartPage() {
                                     <div className={styles.lineTotal}>
                                         Rs {item.price * item.quantity}
                                     </div>
-                                    <button className={styles.removeBtn}>×</button>
+                                    <button
+                                        className={styles.removeBtn}
+                                        onClick={() => handleDelete(item?._id)}
+                                    >
+                                        ×
+                                    </button>
                                 </div>
                             ))
                         ) : (

@@ -2,7 +2,7 @@ import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
 
 export const getData = async () => {
-  return await axiosClient.get(apiConfig.cart);
+  return await axiosClient.get(apiConfig.cart.get);
 };
 
 export async function GET() {
