@@ -1,0 +1,138 @@
+.container {
+  gap: 2rem;
+  display: flex;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.mainImage {
+  width: 70%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.thumbnails {
+  gap: 1rem;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.thumbnails img {
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 6px;
+  transition: 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.thumbnails img:hover {
+  border-color: #0070f3;
+}
+
+.right {
+  flex: 1;
+  gap: 1rem;
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+}
+
+.productName {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.sizes {
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.sizeBtn {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: 0.2s ease;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+}
+
+.sizeBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.quantity {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.quantity input {
+  width: 60px;
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.total {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.cartBtn {
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+  padding: 0.8rem 1.5rem;
+  background-color: #0070f3;
+}
+
+.cartBtn:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.editBtn {
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 6px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.7rem 1.5rem;
+  background-color: gray;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editBtn:hover {
+  background-color: #e6c800;
+  transform: translateY(-2px);
+}
+
+.activeThumb {
+  transform: scale(1.05);
+  border: 2px solid black;
+}
+
+.activeSize {
+  color: white;
+  background-color: black;
+}
