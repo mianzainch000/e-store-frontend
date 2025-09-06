@@ -55,6 +55,25 @@ export default function CartPage() {
     }
   };
 
+  const handleDeleteAllCart = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.delete("cart/api");
+
+      if (res?.status === 200) {
+        showAlertMessage({ message: res.data.message, type: "success" });
+        setCarts([]);
+      }
+    } catch (error) {
+      const { message } = handleAxiosError(error);
+      showAlertMessage({
+        message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       {loading && <Loader />}
@@ -114,8 +133,8 @@ export default function CartPage() {
               </span>
             </div>
             <div className={styles.row}>
-              <span>Shipping</span>
-              <span>Rs 250</span>
+              {/* <span>Shipping</span>
+              <span>Rs 250</span> */}
             </div>
             <div className={styles.divider} />
             <div className={styles.totalRow}>
@@ -125,7 +144,7 @@ export default function CartPage() {
                 {cart.reduce(
                   (acc, item) => acc + item.price * item.quantity,
                   0
-                ) + 250}
+                ) + 0}
               </span>
             </div>
             <button className={styles.checkoutBtn}>Checkout</button>

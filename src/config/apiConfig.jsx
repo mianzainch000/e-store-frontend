@@ -18,5 +18,6 @@ export const apiConfig = {
   cart: {
     get: "getCart",
     delete: "deleteCart",
+    removeAll: "removeAll",
   },
 };
