@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/ProductDetail.module.css";
 import { useSnackbar } from "@/components/Snackbar";
+import handleAxiosError from "@/components/HandleAxiosError";
+import Loader from "@/components/Loader";
+import axios from "axios";
 
 const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
@@ -13,6 +16,7 @@ const ProductDetail = ({ productData }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   // images normalize
   const images =
@@ -51,102 +55,153 @@ const ProductDetail = ({ productData }) => {
     setTotalPrice(productData?.price * quantity);
   }, [productData?.price, quantity]);
 
+  //  Add to cart api
+
+  // ✅ Add to cart api
+  const addToCart = async () => {
+    try {
+      if (!currentSizes[selectedSizeIndex]) {
+        return showAlertMessage({
+          message: "Please select a size",
+          type: "error",
+        });
+      }
+
+      setLoading(true);
+
+      const payload = {
+        productId: productData._id,
+        sizeName: currentSizes[selectedSizeIndex]?.name,
+        quantity,
+      };
+
+      const res = await axios.post("/screens/products/api", payload);
+
+      if (res?.status === 201) {
+        showAlertMessage({
+          message: res?.data.message,
+          type: "success",
+        });
+      } else {
+        showAlertMessage({
+          message: res?.data?.message || "Something went wrong",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      const { message } = handleAxiosError(error);
+      showAlertMessage({
+        message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      {/* Left Side Images */}
-      <div className={styles.left}>
-        {images.length > 0 && (
-          <Image
-            src={`${apiConfig.baseUrl}${images[selectedImageIndex]}`}
-            alt="Main Product"
-            width={400}
-            height={400}
-            className={styles.mainImage}
-          />
-        )}
-
-        <div className={styles.thumbnails}>
-          {images.map((img, index) => (
+    <>
+      {loading && <Loader />}
+      <div className={styles.container}>
+        {/* Left Side Images */}
+        <div className={styles.left}>
+          {images.length > 0 && (
             <Image
-              key={index}
-              src={`${apiConfig.baseUrl}${img}`}
-              alt={`Thumb ${index + 1}`}
-              width={80}
-              height={80}
-              className={index === selectedImageIndex ? styles.activeThumb : ""}
-              onClick={() => {
-                setSelectedImageIndex(index);
-                setSelectedSizeIndex(0); // reset size when image changes
-                setQuantity(1);
-              }}
+              src={`${apiConfig.baseUrl}${images[selectedImageIndex]}`}
+              alt="Main Product"
+              width={400}
+              height={400}
+              className={styles.mainImage}
             />
-          ))}
-        </div>
-      </div>
+          )}
 
-      {/* Right Side Details */}
-      <div className={styles.right}>
-        <h2 className={styles.productName}>{productData?.name}</h2>
-        <p className={styles.price}>Rs {productData?.price}</p>
-
-        {/* Sizes per image */}
-        <div className={styles.sizes}>
-          <span>Sizes:</span>
-          <>
-            {currentSizes.map((s, index) => (
-              <button
+          <div className={styles.thumbnails}>
+            {images.map((img, index) => (
+              <Image
                 key={index}
-                className={`${styles.sizeBtn} ${
-                  index === selectedSizeIndex ? styles.activeSize : ""
-                }`}
-                onClick={() => setSelectedSizeIndex(index)}
-              >
-                {s.name} ({s.quantity})
-              </button>
+                src={`${apiConfig.baseUrl}${img}`}
+                alt={`Thumb ${index + 1}`}
+                width={80}
+                height={80}
+                className={
+                  index === selectedImageIndex ? styles.activeThumb : ""
+                }
+                onClick={() => {
+                  setSelectedImageIndex(index);
+                  setSelectedSizeIndex(0); // reset size when image changes
+                  setQuantity(1);
+                }}
+              />
             ))}
-          </>
+          </div>
         </div>
 
-        <div className={styles.quantity}>
-          <span>Quantity:</span>
-          <input
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={handleQuantityChange}
-            disabled={currentSizes.length === 0}
-          />
-        </div>
+        {/* Right Side Details */}
+        <div className={styles.right}>
+          <h2 className={styles.productName}>{productData?.name}</h2>
+          <p className={styles.price}>Rs {productData?.price}</p>
 
-        {/* Selected Size Info */}
-        {currentSizes.length > 0 && (
-          <div className={styles.selectedInfo}>
-            {/* <p>
+          {/* Sizes per image */}
+          <div className={styles.sizes}>
+            <span>Sizes:</span>
+            <>
+              {currentSizes.map((s, index) => (
+                <button
+                  key={index}
+                  className={`${styles.sizeBtn} ${
+                    index === selectedSizeIndex ? styles.activeSize : ""
+                  }`}
+                  onClick={() => setSelectedSizeIndex(index)}
+                >
+                  {s.name} ({s.quantity})
+                </button>
+              ))}
+            </>
+          </div>
+
+          <div className={styles.quantity}>
+            <span>Quantity:</span>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={handleQuantityChange}
+              disabled={currentSizes.length === 0}
+            />
+          </div>
+
+          {/* Selected Size Info */}
+          {currentSizes.length > 0 && (
+            <div className={styles.selectedInfo}>
+              {/* <p>
               Selected Size:{" "}
               <strong>{currentSizes[selectedSizeIndex]?.name}</strong>
             </p> */}
-            <p>
-              Quantity:{" "}
-              <strong>{currentSizes[selectedSizeIndex]?.quantity}</strong>
-            </p>
+              <p>
+                Quantity:{" "}
+                <strong>{currentSizes[selectedSizeIndex]?.quantity}</strong>
+              </p>
+            </div>
+          )}
+
+          <div className={styles.total}>
+            <span>Total Price:</span>
+            <strong>Rs. {totalPrice}</strong>
           </div>
-        )}
 
-        <div className={styles.total}>
-          <span>Total Price:</span>
-          <strong>Rs. {totalPrice}</strong>
+          <button className={styles.cartBtn} onClick={addToCart}>
+            Add to Cart
+          </button>
+          <Link
+            href={`/screens/addProduct/${productData?._id}`}
+            className={styles.editBtn}
+            onClick={() => handleEdit(productData)}
+          >
+            Edit
+          </Link>
         </div>
-
-        <button className={styles.cartBtn}>Add to Cart</button>
-        <Link
-          href={`/screens/addProduct/${productData?._id}`}
-          className={styles.editBtn}
-          onClick={() => handleEdit(productData)}
-        >
-          Edit
-        </Link>
       </div>
-    </div>
+    </>
   );
 };
 

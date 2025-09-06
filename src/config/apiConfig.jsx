@@ -13,5 +13,7 @@ export const apiConfig = {
   products: {
     get: "getProducts",
     delete: "deleteProduct",
+    addCart: "addCart",
   },
+  cart: "getCart",
 };
