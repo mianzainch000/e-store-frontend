@@ -8,6 +8,7 @@ import styles from "@/css/Auth.module.css";
 import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import CustomButton from "@/components/Button";
 
 const Login = () => {
   // Hooks
@@ -114,15 +115,15 @@ const Login = () => {
               </Link>
             </div>
 
-            <button type="submit" className={styles.submitBtn}>
-              Sign In
-            </button>
+            <CustomButton type="submit" text="Sign In" variant="primary" />
           </form>
-
-          <button className={styles.googleBtn}>
-            <Image src="/google-icon.svg" alt="Google" width={20} height={20} />
-            Login with Google
-          </button>
+          <br />
+          <CustomButton
+            type="button"
+            text="Login with Google"
+            variant="google"
+            startIcon={<Image src="/google-icon.svg" alt="Google" width={20} height={20} />}
+          />
 
           <p className={styles.loginText}>
             Don’t have an account? <Link href="/auth/signup">Signup</Link>

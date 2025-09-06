@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import CustomButton from "@/components/Button";
 
 const Signup = () => {
   // Hooks
@@ -166,9 +167,11 @@ const Signup = () => {
               }
             />
 
-            <button type="submit" className={styles.submitBtn}>
-              Signup
-            </button>
+            <CustomButton
+              type="submit"
+              text="Signup"
+              variant="primary"
+            />
           </form>
 
           <p className={styles.loginText}>

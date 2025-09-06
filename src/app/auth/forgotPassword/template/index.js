@@ -9,6 +9,7 @@ import { apiConfig } from "@/config/apiConfig";
 import TextInput from "@/components/TextInput";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import CustomButton from "@/components/Button";
 
 const ForgotPassword = () => {
   // Hooks
@@ -44,7 +45,7 @@ const ForgotPassword = () => {
       setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.forgotPassword}`,
-        { email },
+        { email }
       );
       if (res?.status === 200) {
         showAlertMessage({
@@ -96,9 +97,11 @@ const ForgotPassword = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <button type="submit" className={styles.submitBtn}>
-              Send Reset Link
-            </button>
+            <CustomButton
+              type="submit"
+              text="Send Reset Link"
+              variant="primary"
+            />
           </form>
 
           <p className={styles.loginText}>
