@@ -6,6 +6,7 @@ import styles from "@/css/Cart.module.css";
 import { useState, useEffect } from "react";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import { apiConfig } from "@/config/apiConfig";
 
 export default function CartPage() {
   const [cart, setCarts] = useState([]);
@@ -68,7 +69,7 @@ export default function CartPage() {
                 <div key={item._id} className={styles.itemRow}>
                   <div className={styles.imgBox}>
                     <Image
-                      src={`/${item.image}`} // ✅ backend se path aa raha hai
+                      src={`${apiConfig.baseUrl}${item.image}`}
                       alt={item?.productId?.name || "Product"}
                       width={80}
                       height={80}
@@ -108,7 +109,7 @@ export default function CartPage() {
                 Rs{" "}
                 {cart.reduce(
                   (acc, item) => acc + item.price * item.quantity,
-                  0,
+                  0
                 )}
               </span>
             </div>
@@ -123,7 +124,7 @@ export default function CartPage() {
                 Rs{" "}
                 {cart.reduce(
                   (acc, item) => acc + item.price * item.quantity,
-                  0,
+                  0
                 ) + 250}
               </span>
             </div>
