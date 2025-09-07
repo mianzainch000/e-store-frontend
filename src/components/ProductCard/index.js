@@ -35,9 +35,6 @@ const ProductCard = ({
             />
           </Link>
 
-          {/* <button className={styles.deleteButton} onClick={onDelete}>
-            Delete
-          </button> */}
           <CustomButton
             text=" Delete"
             onClick={onDelete}
