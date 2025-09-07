@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./UploadImageSection.module.css";
+import styles from "@/css/UploadImageSection.module.css";
 
 const UploadImageSection = ({
   images,
