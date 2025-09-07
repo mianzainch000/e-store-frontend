@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "@/css/ProductCard.module.css";
+import NextImage from "@/components/NextImage";
 
 const ProductCard = ({
   image,
@@ -14,13 +14,14 @@ const ProductCard = ({
 }) => {
   return (
     <div className={styles.card}>
-      <Image
-        src={image}
-        alt="Product"
-        width={80}
-        height={80}
-        className={styles.image}
-      />
+      <div className={styles.image}>
+        <NextImage
+          src={image}
+          alt="Test"
+          fill={false}
+          style={{ objectFit: "fill" }}
+        />
+      </div>
       <div className={styles.content}>
         <h3 className={styles.price}>Rs. {price}</h3>
 
