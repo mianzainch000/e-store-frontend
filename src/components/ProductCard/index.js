@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import styles from "@/css/ProductCard.module.css";
 import NextImage from "@/components/NextImage";
+import styles from "@/css/ProductCard.module.css";
 
 const ProductCard = ({
   image,
