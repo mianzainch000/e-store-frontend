@@ -8,6 +8,8 @@ import React, { useState, useEffect } from "react";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 import UploadImageSection from "@/components/UploadImageSection";
+import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 const ProductForm = ({ editId }) => {
   //Hooks
   const router = useRouter();
@@ -157,7 +159,7 @@ const ProductForm = ({ editId }) => {
       setLoading(true);
       const res = await axios.put(
         `/screens/addProduct/api/${editId?._id}`,
-        formData,
+        formData
       );
       if (res?.status === 200) {
         showAlertMessage({
@@ -228,7 +230,7 @@ const ProductForm = ({ editId }) => {
             {editId?._id ? "Update Product" : "Add Product"}
           </h2>
 
-          <input
+          <TextInput
             type="text"
             className={styles.input}
             placeholder="Product Name"
@@ -236,7 +238,7 @@ const ProductForm = ({ editId }) => {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <input
+          <TextInput
             type="number"
             className={styles.input}
             placeholder="Price"
@@ -253,7 +255,7 @@ const ProductForm = ({ editId }) => {
             spellCheck={false} // ✅ prevent browser injection mismatch
           />
 
-          <input
+          <TextInput
             type="text"
             className={styles.input}
             placeholder="Category"
@@ -270,9 +272,11 @@ const ProductForm = ({ editId }) => {
             onRemoveSize={handleRemoveSize}
           />
 
-          <button type="submit" className={styles.submitBtn}>
-            {editId?._id ? "Update Product" : "Add Product"}
-          </button>
+          <CustomButton
+            type="submit"
+            text={editId?._id ? "Update Product" : "Add Product"}
+            variant="primary"
+          />
         </form>
       </div>
     </>
