@@ -1,12 +1,12 @@
 "use client";
 import axios from "axios";
-import Image from "next/image";
 import Loader from "@/components/Loader";
 import styles from "@/css/Cart.module.css";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import NextImage from "@/components/NextImage";
 
 const CartPage = () => {
   const [cart, setCarts] = useState([]);
@@ -86,12 +86,13 @@ const CartPage = () => {
               cart.map((item) => (
                 <div key={item._id} className={styles.itemRow}>
                   <div className={styles.imgBox}>
-                    <Image
+                    <NextImage
                       src={`${apiConfig.baseUrl}${item.image}`}
-                      alt={item?.productId?.name || "Product"}
-                      width={80}
+                      alt="Prdouct"
+                      fill={false}
                       height={80}
-                      className={styles.img}
+                      width={80}
+                      style={{ objectFit: "fill" }}
                     />
                   </div>
                   <div className={styles.info}>
@@ -119,42 +120,46 @@ const CartPage = () => {
           </div>
 
           {/* Summary */}
-          <div className={styles.summaryCard}>
-            <h2>Summary</h2>
-            <div className={styles.row}>
-              <span>Subtotal</span>
-              <span>
-                Rs{" "}
-                {cart.reduce(
-                  (acc, item) => acc + item.price * item.quantity,
-                  0,
-                )}
-              </span>
-            </div>
-            <div className={styles.row}>
-              {/* <span>Shipping</span>
+          {cart.length > 0 ? (
+            <div className={styles.summaryCard}>
+              <h2>Summary</h2>
+              <div className={styles.row}>
+                <span>Subtotal</span>
+                <span>
+                  Rs{" "}
+                  {cart.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                  )}
+                </span>
+              </div>
+              <div className={styles.row}>
+                {/* <span>Shipping</span>
               <span>Rs 250</span> */}
+              </div>
+              <div className={styles.divider} />
+              <div className={styles.totalRow}>
+                <span>Total</span>
+                <span>
+                  Rs{" "}
+                  {cart.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                  ) + 0}
+                </span>
+              </div>
+              <button className={styles.checkoutBtn}>Checkout</button>
+              <button
+                type="button"
+                onClick={handleDeleteAllCart}
+                className={styles.removeAllBtn}
+              >
+                Remove All Cart Items
+              </button>
             </div>
-            <div className={styles.divider} />
-            <div className={styles.totalRow}>
-              <span>Total</span>
-              <span>
-                Rs{" "}
-                {cart.reduce(
-                  (acc, item) => acc + item.price * item.quantity,
-                  0,
-                ) + 0}
-              </span>
-            </div>
-            <button className={styles.checkoutBtn}>Checkout</button>
-            <button
-              type="button"
-              onClick={handleDeleteAllCart}
-              className={styles.removeAllBtn}
-            >
-              Remove All Cart Items
-            </button>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>
