@@ -28,23 +28,23 @@ const ProductDetail = ({ productData }) => {
   // Sizes for current selected image
   const currentSizes = localProductData?.sizes?.[selectedImageIndex] || [];
 
-  // data show
-  // ✅ Fetch fresh product using getProductById API
+  //  Fetch fresh product using getProductById API
+  const fetchFreshProduct = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`/screens/products/api/${productData._id}`);
+      setLocalProductData(res.data);
+    } catch (error) {
+      const { message } = handleAxiosError(error);
+      showAlertMessage({
+        message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchFreshProduct = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(`/screens/products/api/${productData._id}`);
-
-        if (res?.data) setLocalProductData(res.data);
-      } catch (err) {
-        console.error("Failed to fetch fresh product:", err);
-        setLocalProductData(productData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (productData?._id) fetchFreshProduct();
   }, [productData?._id]);
 
@@ -86,18 +86,18 @@ const ProductDetail = ({ productData }) => {
 
       if (res?.status === 201) {
         showAlertMessage({ message: res?.data.message, type: "success" });
-
+        fetchFreshProduct();
         // Runtime update of selected size quantity
-        setLocalProductData((prev) => ({
-          ...prev,
-          sizes: prev.sizes.map((imgSizes, imgIndex) =>
-            imgSizes.map((size, sizeIndex) =>
-              imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
-                ? { ...size, quantity: size.quantity - quantity }
-                : size
-            )
-          ),
-        }));
+        // setLocalProductData((prev) => ({
+        //   ...prev,
+        //   sizes: prev.sizes.map((imgSizes, imgIndex) =>
+        //     imgSizes.map((size, sizeIndex) =>
+        //       imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
+        //         ? { ...size, quantity: size.quantity - quantity }
+        //         : size
+        //     )
+        //   ),
+        // }));
 
         setQuantity(1); // Reset quantity input
       } else {
@@ -116,100 +116,115 @@ const ProductDetail = ({ productData }) => {
 
   return (
     <>
-      {loading && <Loader />}
-      <div className={styles.container}>
-        {/* Left: Images */}
-        <div className={styles.left}>
-          {images.length > 0 && (
-            <NextImage
-              src={`${apiConfig.baseUrl}${images[selectedImageIndex]}`}
-              alt="Main Product"
-              fill={false}
-              style={{ objectFit: "fill" }}
-              width={300}
-              height={300}
-              className={styles.mainImage}
-            />
-          )}
-          <div className={styles.thumbnails}>
-            {images.map((img, index) => (
+      {!localProductData || loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.container}>
+          {/* Left: Images */}
+          <div className={styles.left}>
+            {images.length > 0 && (
               <NextImage
-                key={index}
-                src={`${apiConfig.baseUrl}${img}`}
-                alt={`Thumb ${index + 1}`}
-                style={{ objectFit: "fill" }}
-                width={80}
-                height={80}
-                className={
-                  index === selectedImageIndex ? styles.activeThumb : ""
+                src={
+                  images?.[selectedImageIndex]
+                    ? `${apiConfig.baseUrl}${images[selectedImageIndex]}`
+                    : "/shirt.jpeg"
                 }
-                onClick={() => {
-                  setSelectedImageIndex(index);
-                  setSelectedSizeIndex(0);
-                  setQuantity(1);
-                }}
+                alt="Main Product"
+                fill={false}
+                style={{ objectFit: "fill" }}
+                width={300}
+                height={300}
+                className={styles.mainImage}
               />
-            ))}
-          </div>
-        </div>
-
-        {/* Right: Details */}
-        <div className={styles.right}>
-          <h2 className={styles.productName}>{localProductData?.name}</h2>
-          <p className={styles.price}>Rs {localProductData?.price}</p>
-
-          {/* Sizes */}
-          <div className={styles.sizes}>
-            <span>Sizes:</span>
-            {currentSizes.map((s, index) => (
-              <button
-                key={index}
-                className={`${styles.sizeBtn} ${index === selectedSizeIndex ? styles.activeSize : ""}`}
-                onClick={() => setSelectedSizeIndex(index)}
-              >
-                {s.name} ({s.quantity})
-              </button>
-            ))}
-          </div>
-
-          {/* Quantity */}
-          <div className={styles.quantity}>
-            <span>Quantity:</span>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={handleQuantityChange}
-              disabled={currentSizes.length === 0}
-            />
+            )}
+            <div className={styles.thumbnails}>
+              {images.map((img, index) => (
+                <NextImage
+                  key={index}
+                  src={`${apiConfig.baseUrl}${img}`}
+                  alt={`Thumb ${index + 1}`}
+                  style={{ objectFit: "fill" }}
+                  width={80}
+                  height={80}
+                  className={
+                    index === selectedImageIndex ? styles.activeThumb : ""
+                  }
+                  onClick={() => {
+                    setSelectedImageIndex(index);
+                    setSelectedSizeIndex(0);
+                    setQuantity(1);
+                  }}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Total Price */}
-          <div className={styles.total}>
-            <span>Total Price:</span>
-            <strong>Rs. {totalPrice}</strong>
-          </div>
+          {/* Right: Details */}
+          <div className={styles.right}>
+            <h2 className={styles.productName}>
+              {localProductData?.name || "Product Name"}
+            </h2>
+            <p className={styles.price}>Rs {localProductData?.price || "00"}</p>
 
-          {/* Buttons */}
-          {/* <button className={styles.cartBtn} onClick={addToCart}>
+            {/* Sizes */}
+            <div className={styles.sizes}>
+              <span>Sizes:</span>
+              {currentSizes.length > 0 ? (
+                currentSizes.map((s, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.sizeBtn} ${
+                      index === selectedSizeIndex ? styles.activeSize : ""
+                    }`}
+                    onClick={() => setSelectedSizeIndex(index)}
+                  >
+                    {s.name} ({s.quantity})
+                  </button>
+                ))
+              ) : (
+                <span className={styles.noSize}>No Sizes Available</span>
+              )}
+            </div>
+
+            {/* Quantity */}
+            <div className={styles.quantity}>
+              <span>Quantity:</span>
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={handleQuantityChange}
+                disabled={currentSizes.length === 0}
+              />
+            </div>
+
+            {/* Total Price */}
+            <div className={styles.total}>
+              <span>Total Price:</span>
+              <strong>Rs. {totalPrice || "00"} </strong>
+            </div>
+
+            {/* Buttons */}
+            {/* <button className={styles.cartBtn} onClick={addToCart}>
             Add to Cart
           </button> */}
-          <CustomButton
-            type="submit"
-            text="Add to Cart"
-            variant="primary"
-            onClick={addToCart}
-            className={styles.cartBtn}
-          />
-          <Link href={`/screens/addProduct/${localProductData?._id}`}>
             <CustomButton
-              text="Edit"
-              variant="warning"
+              type="submit"
+              text="Add to Cart"
+              variant="primary"
+              onClick={addToCart}
               className={styles.cartBtn}
             />
-          </Link>
+            <Link href={`/screens/addProduct/${localProductData?._id}`}>
+              <CustomButton
+                text="Edit"
+                variant="warning"
+                className={styles.cartBtn}
+              />
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -17,7 +17,7 @@ const ProductCard = ({
     <div className={styles.card}>
       <div className={styles.image}>
         <NextImage
-          src={image}
+          src={image || "/shirt.jpeg"}
           alt="Prdouct"
           fill={false}
           style={{ objectFit: "fill" }}

@@ -4,9 +4,9 @@ import Loader from "@/components/Loader";
 import styles from "@/css/Cart.module.css";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
+import NextImage from "@/components/NextImage";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import NextImage from "@/components/NextImage";
 
 const CartPage = () => {
   const [cart, setCarts] = useState([]);
@@ -129,7 +129,7 @@ const CartPage = () => {
                   Rs{" "}
                   {cart.reduce(
                     (acc, item) => acc + item.price * item.quantity,
-                    0
+                    0,
                   )}
                 </span>
               </div>
@@ -144,7 +144,7 @@ const CartPage = () => {
                   Rs{" "}
                   {cart.reduce(
                     (acc, item) => acc + item.price * item.quantity,
-                    0
+                    0,
                   ) + 0}
                 </span>
               </div>
