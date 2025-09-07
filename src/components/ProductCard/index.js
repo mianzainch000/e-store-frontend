@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import CustomButton from "../Button";
 import NextImage from "@/components/NextImage";
 import styles from "@/css/ProductCard.module.css";
 
@@ -27,14 +28,21 @@ const ProductCard = ({
 
         <div className={styles.buttons}>
           <Link href={`/screens/products/${productId}`} onClick={onViewDetail}>
-            <button className={styles.viewButton} onClick={onClick}>
-              View Detail
-            </button>
+            <CustomButton
+              text="View Detail"
+              variant="primary"
+              onClick={onClick}
+            />
           </Link>
 
-          <button className={styles.deleteButton} onClick={onDelete}>
+          {/* <button className={styles.deleteButton} onClick={onDelete}>
             Delete
-          </button>
+          </button> */}
+          <CustomButton
+            text=" Delete"
+            onClick={onDelete}
+            className={styles.deleteButton}
+          />
         </div>
       </div>
     </div>

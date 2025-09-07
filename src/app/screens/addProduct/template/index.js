@@ -3,13 +3,13 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { apiConfig } from "@/config/apiConfig";
+import TextInput from "@/components/TextInput";
+import CustomButton from "@/components/Button";
 import styles from "@/css/AddProduct.module.css";
 import React, { useState, useEffect } from "react";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 import UploadImageSection from "@/components/UploadImageSection";
-import TextInput from "@/components/TextInput";
-import CustomButton from "@/components/Button";
 const ProductForm = ({ editId }) => {
   //Hooks
   const router = useRouter();
@@ -159,7 +159,7 @@ const ProductForm = ({ editId }) => {
       setLoading(true);
       const res = await axios.put(
         `/screens/addProduct/api/${editId?._id}`,
-        formData
+        formData,
       );
       if (res?.status === 200) {
         showAlertMessage({

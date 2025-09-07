@@ -3,10 +3,10 @@
 }
 
 .addImageBtn {
+  color: #000000;
   cursor: pointer;
   padding: 8px 14px;
   border-radius: 6px;
-  color: #000000;
   margin-bottom: 15px;
   background: transparent;
   border: 1px dashed #000000;
@@ -34,8 +34,8 @@
   overflow: hidden;
   border-radius: 8px;
   align-items: center;
-  justify-content: center;
   background: #ffffff;
+  justify-content: center;
   border: 2px dashed #000000;
 }
 
@@ -46,8 +46,8 @@
 }
 
 .icon {
-  font-size: 36px;
   color: #000000;
+  font-size: 36px;
 }
 
 .hiddenInput {
@@ -57,6 +57,7 @@
 .removeBtn {
   border: none;
   display: block;
+  color: #cc0000;
   font-size: 20px;
   cursor: pointer;
   margin-top: 8px;
@@ -64,7 +65,6 @@
   text-align: center;
   margin-right: auto;
   background: transparent;
-  color: #cc0000;
 }
 
 /* Size Fields */
@@ -73,9 +73,9 @@
 }
 
 .sizeTitle {
+  color: #000000;
   font-weight: 600;
   margin-bottom: 6px;
-  color: #000000;
 }
 
 .sizeRow {
@@ -94,18 +94,18 @@
 
 .addSizeBtn {
   border: none;
+  color: #ffffff;
   cursor: pointer;
   font-size: 14px;
   padding: 6px 12px;
   border-radius: 6px;
-  color: #ffffff;
   background: #000000;
 }
 
 .removeSizeBtn {
   border: none;
+  color: #cc0000;
   font-size: 18px;
   cursor: pointer;
   background: transparent;
-  color: #cc0000;
 }

@@ -50,24 +50,15 @@
   transition: all 0.3s ease;
 }
 
-.viewButton {
-  color: white;
-  background-color: #1976d2;
-}
-
-.viewButton:hover {
-  background-color: #125ea9;
-}
-
 .deleteButton {
-  color: #d32f2f;
-  border: 2px solid #d32f2f;
-  background-color: transparent;
+  color: #d32f2f !important;
+  border: 2px solid #d32f2f !important;
+  background-color: transparent !important;
 }
 
 .deleteButton:hover {
-  color: white;
-  background-color: #d32f2f;
+  color: white !important;
+  background-color: #d32f2f !important;
 }
 
 /* Responsive */

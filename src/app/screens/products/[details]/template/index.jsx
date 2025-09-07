@@ -4,11 +4,11 @@ import Link from "next/link";
 import Loader from "@/components/Loader";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
+import NextImage from "@/components/NextImage";
+import CustomButton from "@/components/Button";
 import styles from "@/css/ProductDetail.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import NextImage from "@/components/NextImage";
-import CustomButton from "@/components/Button";
 
 const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
@@ -79,8 +79,8 @@ const ProductDetail = ({ productData }) => {
             imgSizes.map((size, sizeIndex) =>
               imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
                 ? { ...size, quantity: size.quantity - quantity }
-                : size
-            )
+                : size,
+            ),
           ),
         }));
 
