@@ -10,7 +10,7 @@ const UpdateForm = () => {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    const storedData = getCookie(`editData_${prdodutEditId}`);
+    const storedData = getCookie(`products_${prdodutEditId}`);
     if (storedData) {
       const data = JSON.parse(storedData);
       setEditId(data);
