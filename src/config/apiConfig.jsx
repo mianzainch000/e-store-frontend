@@ -14,6 +14,7 @@ export const apiConfig = {
     get: "getProducts",
     delete: "deleteProduct",
     addCart: "addCart",
+    getProduct: "getProduct",
   },
   cart: {
     get: "getCart",

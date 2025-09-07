@@ -29,9 +29,24 @@ const ProductDetail = ({ productData }) => {
   const currentSizes = localProductData?.sizes?.[selectedImageIndex] || [];
 
   // data show
+  // ✅ Fetch fresh product using getProductById API
   useEffect(() => {
-    setLocalProductData(productData);
-  }, [productData]);
+    const fetchFreshProduct = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`/screens/products/api/${productData._id}`);
+
+        if (res?.data) setLocalProductData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch fresh product:", err);
+        setLocalProductData(productData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (productData?._id) fetchFreshProduct();
+  }, [productData?._id]);
 
   // Update total price whenever quantity or price changes
   useEffect(() => {
@@ -79,8 +94,8 @@ const ProductDetail = ({ productData }) => {
             imgSizes.map((size, sizeIndex) =>
               imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
                 ? { ...size, quantity: size.quantity - quantity }
-                : size,
-            ),
+                : size
+            )
           ),
         }));
 
