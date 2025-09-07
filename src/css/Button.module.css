@@ -41,6 +41,15 @@
   background: #c0392b;
 }
 
+.warning {
+  color: #333;
+  background: #f1c40f;
+}
+
+.warning:hover {
+  background: #d4ac0d;
+}
+
 .google {
   color: #333;
   background: var(--btn-google-bg);

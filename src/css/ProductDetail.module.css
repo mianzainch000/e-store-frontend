@@ -11,9 +11,6 @@
 }
 
 .mainImage {
-  width: 70%;
-  max-height: 400px;
-  object-fit: cover;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
@@ -91,40 +88,12 @@
 }
 
 .cartBtn {
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  border-radius: 6px;
-  transition: 0.3s ease;
-  padding: 0.8rem 1.5rem;
-  background-color: #0070f3;
-}
-
-.cartBtn:hover {
-  background-color: #005bb5;
-  transform: translateY(-2px);
-}
-
-.editBtn {
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 500;
-  border-radius: 6px;
-  text-align: center;
-  display: inline-block;
-  text-decoration: none;
-  padding: 0.7rem 1.5rem;
-  background-color: gray;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.editBtn:hover {
-  background-color: #e6c800;
-  transform: translateY(-2px);
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 20px !important;
+  border-radius: 6px !important;
+  transition: 0.3s ease !important;
+  padding: 0.8rem 1.5rem !important;
 }
 
 .activeThumb {

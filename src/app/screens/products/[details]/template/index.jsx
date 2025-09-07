@@ -1,13 +1,14 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import Image from "next/image";
 import Loader from "@/components/Loader";
 import { useState, useEffect } from "react";
 import { apiConfig } from "@/config/apiConfig";
 import styles from "@/css/ProductDetail.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import NextImage from "@/components/NextImage";
+import CustomButton from "@/components/Button";
 
 const ProductDetail = ({ productData }) => {
   const showAlertMessage = useSnackbar();
@@ -78,8 +79,8 @@ const ProductDetail = ({ productData }) => {
             imgSizes.map((size, sizeIndex) =>
               imgIndex === selectedImageIndex && sizeIndex === selectedSizeIndex
                 ? { ...size, quantity: size.quantity - quantity }
-                : size,
-            ),
+                : size
+            )
           ),
         }));
 
@@ -105,20 +106,23 @@ const ProductDetail = ({ productData }) => {
         {/* Left: Images */}
         <div className={styles.left}>
           {images.length > 0 && (
-            <Image
+            <NextImage
               src={`${apiConfig.baseUrl}${images[selectedImageIndex]}`}
               alt="Main Product"
-              width={400}
-              height={400}
+              fill={false}
+              style={{ objectFit: "fill" }}
+              width={300}
+              height={300}
               className={styles.mainImage}
             />
           )}
           <div className={styles.thumbnails}>
             {images.map((img, index) => (
-              <Image
+              <NextImage
                 key={index}
                 src={`${apiConfig.baseUrl}${img}`}
                 alt={`Thumb ${index + 1}`}
+                style={{ objectFit: "fill" }}
                 width={80}
                 height={80}
                 className={
@@ -172,14 +176,22 @@ const ProductDetail = ({ productData }) => {
           </div>
 
           {/* Buttons */}
-          <button className={styles.cartBtn} onClick={addToCart}>
+          {/* <button className={styles.cartBtn} onClick={addToCart}>
             Add to Cart
-          </button>
-          <Link
-            href={`/screens/addProduct/${localProductData?._id}`}
-            className={styles.editBtn}
-          >
-            Edit
+          </button> */}
+          <CustomButton
+            type="submit"
+            text="Add to Cart"
+            variant="primary"
+            onClick={addToCart}
+            className={styles.cartBtn}
+          />
+          <Link href={`/screens/addProduct/${localProductData?._id}`}>
+            <CustomButton
+              text="Edit"
+              variant="warning"
+              className={styles.cartBtn}
+            />
           </Link>
         </div>
       </div>

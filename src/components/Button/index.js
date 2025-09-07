@@ -8,13 +8,14 @@ const CustomButton = ({
   onClick,
   variant = "primary",
   disabled = false,
+  className = "",
   startIcon,
   endIcon,
 }) => {
   return (
     <button
       type={type}
-      className={`${styles.btn} ${styles[variant]}`}
+      className={`${styles.btn} ${styles[variant]} ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
