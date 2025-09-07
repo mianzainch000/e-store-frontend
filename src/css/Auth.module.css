@@ -4,7 +4,7 @@
   min-height: 100dvh;
   align-items: center;
   justify-content: center;
-  background: var(--bg-gradient);
+  background: linear-gradient(135deg, #f6f9fc, #eef2f7);
 }
 
 .card {
@@ -13,15 +13,15 @@
   padding: 40px 30px;
   text-align: center;
   border-radius: 16px;
-  background: var(--bg-card);
-  box-shadow: var(--shadow-card);
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .title {
+  color: #222;
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 30px;
-  color: var(--text-primary);
 }
 
 .form {
@@ -38,9 +38,9 @@
 }
 
 .forgotLink {
+  color: #0070f3;
   font-size: 13px;
   text-decoration: none;
-  color: var(--text-link);
 }
 
 .forgotLink:hover {
@@ -50,17 +50,17 @@
 .submitBtn {
   border: none;
   padding: 12px;
+  color: #ffffff;
   font-size: 15px;
   cursor: pointer;
   font-weight: bold;
   border-radius: 8px;
+  background: #0070f3;
   transition: 0.3s ease;
-  color: var(--btn-text);
-  background: var(--btn-primary);
 }
 
 .submitBtn:hover {
-  background: var(--btn-primary-hover);
+  background: #0056c1;
 }
 
 .googleBtn {
@@ -74,26 +74,26 @@
   font-weight: 500;
   border-radius: 8px;
   align-items: center;
+  background: #ffffff;
+  border: 1px solid #ddd;
   justify-content: center;
   transition: all 0.3s ease;
-  background: var(--btn-google-bg);
-  border: 1px solid var(--btn-google-border);
 }
 
 .googleBtn:hover {
-  background: var(--btn-google-hover-bg);
+  background: #f9f9f9;
 }
 
 .loginText {
+  color: #555;
   font-size: 14px;
   margin-top: 20px;
-  color: var(--text-secondary);
 }
 
 .loginText a {
+  color: #0070f3;
   font-weight: bold;
   text-decoration: none;
-  color: var(--text-link);
 }
 
 .loginText a:hover {
