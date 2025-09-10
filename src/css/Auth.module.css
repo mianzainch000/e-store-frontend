@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  padding: 20px;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f6f9fc, #eef2f7);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  color: #222;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.form {
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.forgotWrapper {
+  display: flex;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
+
+.forgotLink {
+  color: #0070f3;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.submitBtn {
+  border: none;
+  padding: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+  background: #0070f3;
+  transition: 0.3s ease;
+}
+
+.submitBtn:hover {
+  background: #0056c1;
+}
+
+.googleBtn {
+  gap: 10px;
+  width: 100%;
+  display: flex;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.googleBtn:hover {
+  background: #f9f9f9;
+}
+
+.loginText {
+  color: #555;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.loginText a {
+  color: #0070f3;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.loginText a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px;
+  }
+  .title {
+    font-size: 20px;
+  }
+}

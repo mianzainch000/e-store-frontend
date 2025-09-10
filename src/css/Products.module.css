@@ -1,0 +1,49 @@
+.cardContainer {
+  gap: 34px;
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* NEW: Category Button Filter */
+.categoryList {
+  gap: 12px;
+  padding: 0;
+  display: flex;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+}
+
+.categoryItem {
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 16px;
+  background: black;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.categoryItem:hover {
+  color: #4a90e2;
+  background: #e6f0ff;
+  border-color: #4a90e2;
+}
+
+.active {
+  color: #fff;
+  background: #4a90e2;
+  border-color: #4a90e2;
+}
+
+.emptyWrap {
+  grid-column: 1 / -1; /* 👈 Empty state pura grid le lega */
+  display: flex;
+  min-height: 300px;
+  align-items: center;
+  justify-content: center;
+}

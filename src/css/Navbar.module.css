@@ -1,0 +1,142 @@
+.container {
+  width: 100%;
+  z-index: 100;
+  padding: 20px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  background-color: #000000;
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Hamburger menu - hidden on large screens */
+
+.hamburger {
+  gap: 5px;
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  border-radius: 2px;
+  background-color: #ffffff;
+}
+
+/* cross icon */
+
+.closeBtn {
+  display: none;
+}
+
+/* Buttons styling */
+
+.btnContainer {
+  gap: 15px;
+  display: flex;
+}
+
+.btn {
+  width: auto;
+  padding: 8px;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  min-width: 120px;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 12px;
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background-color: #0070f3;
+}
+
+.btnRed {
+  background-color: #ff0000;
+}
+
+.btnPrimary:hover {
+  background-color: #0056c1;
+}
+
+.btnRed:hover {
+  background-color: #cc0000;
+}
+
+.activeSuccess {
+  background-color: green;
+}
+
+.activeSuccess:hover {
+  background-color: #0056c1;
+}
+
+.welcomeText {
+  color: #000000;
+  padding-top: 20px;
+  text-align: center;
+}
+
+/* Responsive / Mobile */
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .closeBtn {
+    top: 20px;
+    right: 20px;
+    border: none;
+    z-index: 1000;
+    color: #000000;
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    position: absolute;
+    display: block !important;
+  }
+
+  .btnContainer {
+    top: 0;
+    left: 0;
+    gap: 20px;
+    width: 100%;
+    z-index: 999;
+    display: none;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 80px 20px 20px 20px;
+  }
+
+  .btnContainer.activeMenu {
+    display: flex;
+  }
+
+  .btn {
+    width: 80%;
+    padding: 12px;
+    font-size: 18px;
+  }
+}

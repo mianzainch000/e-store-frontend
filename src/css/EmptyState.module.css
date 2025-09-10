@@ -1,0 +1,62 @@
+.emptyState {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  display: flex;
+  min-height: 350px;
+  text-align: center;
+  padding: 50px 30px;
+  align-items: center;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #f9fafc, #ffffff);
+}
+
+.emptyState:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.iconBox {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  border-radius: 50%;
+  background: #eef2ff;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.icon {
+  color: #4f46e5;
+  font-size: 48px;
+}
+
+.message {
+  color: #374151;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.btn {
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 12px 26px;
+  background: #2563eb;
+  border-radius: 10px;
+}
+
+.btn:hover {
+  background: #1e40af;
+  transform: scale(1.05);
+}
